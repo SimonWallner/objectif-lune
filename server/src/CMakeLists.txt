@@ -1,7 +1,8 @@
 include_directories(${PROJECT_SOURCE_DIR}/src)
 					
-link_directories(
+include_directories(
 	${PROJECT_SOURCE_DIR}/external/websocketpp/src
+	${Boost_INCLUDE_DIR}
 )
 
 add_library(objectif-lune
@@ -9,4 +10,6 @@ add_library(objectif-lune
 	objectifLune.hpp
 )
 
-target_link_libraries(websocketpp)
+target_link_libraries(objectif-lune
+	websocketpp
+)

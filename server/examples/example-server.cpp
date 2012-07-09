@@ -8,5 +8,6 @@ int main(int argc, char *argv[])
 	objectifLune::Server* server = new objectifLune::Server();
 	server->hello();
 	
+	std::cout << "press any key to continue...";
 	std::getchar();
 }
