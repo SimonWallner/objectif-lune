@@ -5,8 +5,8 @@ link_directories(
 )
 
 add_library(objectif-lune
-	objectif-lune.cpp
-	objectif-lune.hpp
+	objectifLune.cpp
+	objectifLune.hpp
 )
 
 target_link_libraries(websocketpp)
