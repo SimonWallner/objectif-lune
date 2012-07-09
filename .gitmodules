@@ -1,0 +1,3 @@
+[submodule "server/external/websocketpp"]
+	path = server/external/websocketpp
+	url = git@github.com:SimonWallner/websocketpp.git
