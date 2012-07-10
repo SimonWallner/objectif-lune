@@ -15,6 +15,8 @@ namespace objectifLune
 		
 		void on_message(websocketpp::server::connection_ptr con,
 						websocketpp::message::data_ptr msg);
+		
+		void on_open(websocketpp::server::connection_ptr con);
 	};
 }
 
