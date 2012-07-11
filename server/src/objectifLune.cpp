@@ -13,7 +13,13 @@ void ServerHandler::on_message(websocketpp::server::connection_ptr con,
 	
 	std::string payload = msg->get_payload();
 	
-	std::cout << "message received: " << payload << std::endl;
+//	std::cout << "message received: " << payload << std::endl;
+	
+	if (payload == "poll")
+	{
+		
+		con->send("{type: data, payload: [1, 2, 3]}", websocketpp::frame::opcode::TEXT);
+	}
 	
 }
 
