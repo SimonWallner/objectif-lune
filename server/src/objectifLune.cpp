@@ -20,7 +20,6 @@ void ServerHandler::on_message(websocketpp::server::connection_ptr con,
 		
 		con->send("{type: data, payload: [1, 2, 3]}", websocketpp::frame::opcode::TEXT);
 	}
-	
 }
 
 void ServerHandler::on_close(websocketpp::server::connection_ptr con)
