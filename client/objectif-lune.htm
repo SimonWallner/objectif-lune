@@ -9,20 +9,32 @@
 	
 	<link type="text/css" rel="stylesheet" href="reset.css" />
 	<link type="text/css" rel="stylesheet" href="style.css" />
+	<link type="text/css" rel="stylesheet" href="960_12_col.css"/>
 </head>
 
 <body>
-<div id="controls">
-    <div id="server">
-    <input type="text" name="server_url" id="server_url" value="ws://localhost:60600" disabled />
-	<input type="checkbox" id="autoConnect" checked />
-    <button id="toggle_connect" onclick="disconnect();">Disconnect</button>
-    </div>
+<div class="container_12">
+	
+	<div class="grid_8">adsf</div>
+	
+	<div class="grid_4" id="aux">
+		<div class="rounded grey">
+			<div id="server">
+				<input type="text" name="server_url" id="server_url" value="ws://localhost:60600" disabled />
+				<input type="checkbox" id="autoConnect" checked />
+				<button id="toggle_connect" onclick="disconnect();">Disconnect</button>
+			</div>
 
-    <div id="message_input"><input type="text" name="msg" id="msg" value="Hello World!" />
-    <button onclick="send();">Send</button></div>
+			<div id="message_input"><input type="text" name="msg" id="msg" value="Hello World!" />
+				<button onclick="send();">Send</button>
+			</div>
+		</div>	
+		
+		<div class="rounded grey" id="messages">messages</div>
+	</div>
+	
+
 </div>
-<div id="messages"></div>
 
 </body>
 </html>

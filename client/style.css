@@ -1,10 +1,13 @@
-body,html {
-    margin: 10px;
-    padding: 0px;
+body {
+	background-color: #ededed;
 }
-#controls {
-    float:right;
-    background-color: #ccc;
+
+
+.rounded {
 	border-radius: 10px;
 	padding:10px;
+}
+
+.grey {
+	background-color: #ccc;
 }
