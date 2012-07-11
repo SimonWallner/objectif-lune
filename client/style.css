@@ -1,0 +1,10 @@
+body,html {
+    margin: 10px;
+    padding: 0px;
+}
+#controls {
+    float:right;
+    background-color: #ccc;
+	border-radius: 10px;
+	padding:10px;
+}

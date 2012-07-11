@@ -4,14 +4,47 @@
 
 using namespace objectifLune;
 
-void Server::on_message(websocketpp::server::connection_ptr con,
+void ServerHandler::on_message(websocketpp::server::connection_ptr con,
 						websocketpp::message::data_ptr msg)
 {
-	con->send(msg->get_payload(), msg->get_opcode());
- }
+	if (msg->get_opcode() != websocketpp::frame::opcode::TEXT) {
+        return;
+    }
+	
+	std::string payload = msg->get_payload();
+	
+	std::cout << "message received: " << payload << std::endl;
+	
+}
 
-
-void Server::on_open(websocketpp::server::connection_ptr con)
+void ServerHandler::on_close(websocketpp::server::connection_ptr con)
 {
-	std::cout << "connection opened" << std::endl;
+	std::cout << "-- connection closed" << std::endl;
+}
+
+
+void ServerHandler::on_open(websocketpp::server::connection_ptr con)
+{
+	std::cout << "++ connection opened" << std::endl;
+}
+
+Server::Server(unsigned short _portNumber)
+: portNumber(_portNumber)
+{}
+
+
+void Server::startService()
+{
+	try
+	{
+		websocketpp::server::handler::ptr handle(new objectifLune::ServerHandler());
+		websocketpp::server endpoint(handle);
+		
+		std::cout << "Starting Objectif Lune server on port " << portNumber << std::endl;
+        endpoint.listen(portNumber);
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << "Exception: " << e.what() << std::endl;
+	}
 }

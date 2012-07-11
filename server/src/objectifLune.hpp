@@ -7,7 +7,7 @@
 
 namespace objectifLune
 {
-	class Server : public websocketpp::server::handler
+	class ServerHandler : public websocketpp::server::handler
 	{
 	private:
 		
@@ -17,6 +17,18 @@ namespace objectifLune
 						websocketpp::message::data_ptr msg);
 		
 		void on_open(websocketpp::server::connection_ptr con);
+		
+		void on_close(websocketpp::server::connection_ptr con);
+	};
+	
+	class Server
+	{
+	public:
+		Server(unsigned short portNumber = 60600);
+		void startService();
+		
+	private:
+		unsigned short portNumber;
 	};
 }
 
