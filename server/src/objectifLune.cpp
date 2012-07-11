@@ -4,6 +4,8 @@
 
 using namespace objectifLune;
 
+int counter = 0;
+
 void ServerHandler::on_message(websocketpp::server::connection_ptr con,
 						websocketpp::message::data_ptr msg)
 {
@@ -17,8 +19,10 @@ void ServerHandler::on_message(websocketpp::server::connection_ptr con,
 	
 	if (payload == "poll")
 	{
-		
-		con->send("{type: data, payload: [1, 2, 3]}", websocketpp::frame::opcode::TEXT);
+		std::stringstream sstr;
+		sstr << "{\"type\": \"data\", \"payload\": [" << counter % 10 << ", " << (counter + 1) % 10 << "]}";
+		con->send(sstr.str(), websocketpp::frame::opcode::TEXT);
+		counter += 2;
 	}
 }
 

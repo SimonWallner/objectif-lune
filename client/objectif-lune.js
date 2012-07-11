@@ -7,8 +7,20 @@ var connectionState = {
 };
 
 var dataArray = [];
+for (var i = 0; i < 100; i++) {
+	dataArray[i] = 0;
+}
 
 var state = connectionState.notConnected;
+
+var x = d3.scale.linear()
+	.domain([0, 100])
+	.range([0, 600])
+	
+var y = d3.scale.linear()
+	.domain([0, 10])
+	.range([140, 0])
+
 
 function connect() {
 	url = document.getElementById("server_url").value;
@@ -48,13 +60,39 @@ function connect() {
 		var payload = msg.data;
 		
 		var data = JSON.parse(payload);
-		dataArray += data.payload;
+		dataArray = dataArray.concat(data.payload);
+		if (dataArray.length > 100) {
+			dataArray.splice(0, dataArray.length - 100);
+		}
 		
 		update();
 	};
 }
 
 function update() {
+	var path = plotGroup.selectAll('path')
+		.data([dataArray]);
+
+	var drawPath = function(d) {
+		d.attr('d', d3.svg.line()
+			.x(function(d,i) {return x(i); })
+			.y(y)
+			.interpolate('linear'))
+			
+	}
+	
+	path.enter().append('path')
+		.call(drawPath);
+	
+	path.transition()
+		.duration(0)
+		.call(drawPath);
+	
+	// plotGroup
+	// 	.attr('transform', 'translate(' + x(2) + ', 0)')
+	// 	.transition()
+	// 		.duration(500)
+	// 			.attr('transform', 'translate(' + x(0) + ', 0)')
 	
 }
 
@@ -65,13 +103,6 @@ function disconnect() {
 	state = connectionState.notConnected;
 }
 
-// function toggle_connect() {
-//	   if (document.getElementById("server_url").disabled === false) {
-//		   connect();
-//	   } else {
-//		   disconnect();
-//	   }
-// }
 
 function auto_connect() {
 	if (document.getElementById("autoConnect").checked === true) {
@@ -99,13 +130,22 @@ function send() {
 
 // connect when ready
 
-setInterval(auto_connect, 500);
-setInterval(poll_server, 500);
+function init() {
+	
+	plotSVG = d3.select('#plot').append('svg')
+		.attr('width', 620)
+		.attr('height', 155)
+	plotGroup = plotSVG.append('g')
+	
+	setInterval(auto_connect, 500);
+	setInterval(poll_server, 500);
+}
 
-// var readyStateCheckInterval = setInterval(function() {
-//	   if (document.readyState === "complete") {
-//		   toggle_connect();
-//		   clearInterval(readyStateCheckInterval);
-//	   }
-// }, 10);
+
+var readyStateCheckInterval = setInterval(function() {
+	   if (document.readyState === "complete") {
+		   init();
+		   clearInterval(readyStateCheckInterval);
+	   }
+}, 10);
 

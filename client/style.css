@@ -11,3 +11,22 @@ body {
 .grey {
 	background-color: #ccc;
 }
+
+div {
+	margin-top: 3px;
+}
+
+svg {
+	background-color: #fff;
+}
+
+
+
+/*
+ * SVG styles
+ */
+#plot path {
+	fill: none;
+ 	stroke: #ccc;
+	stroke-width: 2px;
+}
