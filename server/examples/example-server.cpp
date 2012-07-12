@@ -9,5 +9,10 @@ int main(int argc, char *argv[])
 	
 	Server* server = new Server();
 	server->startService();
-
+	
+	while(true)
+	{
+		server->info("hello, logger");
+		boost::this_thread::sleep(boost::posix_time::seconds(3));
+	}
 }

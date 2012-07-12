@@ -20,6 +20,33 @@ svg {
 	background-color: #fff;
 }
 
+div.notice-area {
+	width: 300px;
+	position: fixed;
+	top: 10px;
+	left:50%;
+	margin-left: -150px;
+	color: #fff;
+	text-align: center;
+	vertical-align: center;
+	font-family: 'Open Sans';
+	font-weight: 700;
+}
+
+div.notice-area div {
+	border-radius: 10px;
+	padding: 10px;
+	margin: 3px;
+}
+
+div.notice {
+	background-color: #6a9cbe;
+}
+
+div.warning {
+	background-color: #ff7e00;
+}
+
 
 
 /*

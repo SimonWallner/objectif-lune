@@ -38,6 +38,7 @@ function connect() {
 
 	ws.onopen = function(e) {
 		document.getElementById("messages").innerHTML += "Client: A connection to " + ws.URL + " has been opened.<br />";
+		notice("connection to " + ws.URL + " established!");
 		
 		document.getElementById("server_url").disabled = true;
 		state = connectionState.connected;
@@ -52,23 +53,44 @@ function connect() {
 	ws.onclose = function(e) {
 		if (state === connectionState.connected) {
 			document.getElementById("messages").innerHTML += "Client: The connection to " + url + " was closed.<br />";			
+			warn("connection to " + ws.URL + " closed!");
 		}
 		state = connectionState.notConnected;
 	};
 	
 	ws.onmessage = function(msg) {
-		var payload = msg.data;
 		
-		var data = JSON.parse(payload);
-		dataArray = dataArray.concat(data.payload);
-		if (dataArray.length > 100) {
-			dataArray.splice(0, dataArray.length - 100);
-		}
-		
-		update();
+		document.getElementById("dump").innerHTML += msg.data + '<br />';
+		// var payload = msg.data;
+		// 
+		// var data = JSON.parse(payload);
+		// dataArray = dataArray.concat(data.payload);
+		// if (dataArray.length > 100) {
+		// 	dataArray.splice(0, dataArray.length - 100);
+		// }
+		// 
+		// update();
 	};
 }
 
+function notification(CSSClass, msg) {
+	d3.select('#notice-area').append('div')
+		.attr('class', CSSClass)
+		.text(msg)
+		.style('opacity', 1)
+		.transition()
+			.duration(5000)
+				.style('opacity', 0)
+				.remove();
+}
+
+function notice(msg) {
+	notification('notice', msg);
+}
+
+function warn(msg) {
+	notification('warning', msg);
+}
 function update() {
 	var path = plotGroup.selectAll('path')
 		.data([dataArray]);
@@ -100,7 +122,6 @@ function disconnect() {
 	ws.close();
 	document.getElementById("server_url").disabled = false;
 	document.getElementById("autoConnect").checked = false;
-	state = connectionState.notConnected;
 }
 
 
@@ -109,12 +130,6 @@ function auto_connect() {
 		if (state === connectionState.notConnected) {
 			connect();
 		}
-	}
-}
-
-function poll_server() {
-	if (ws && ws.readyState === 1) {
-		ws.send("poll");
 	}
 }
 
@@ -138,7 +153,6 @@ function init() {
 	plotGroup = plotSVG.append('g')
 	
 	setInterval(auto_connect, 500);
-	setInterval(poll_server, 500);
 }
 
 
