@@ -16,20 +16,20 @@
 
 body {
 	background-color: #333;
-	font-size: 16px;
+	font-size: 13px;
 	font-family: 'Bitter';
 	font-weight: 400;
 	color: #E8E8E8;
 }
 
 div.container {
-	width: 620px;
+	width: 460px;
 	margin-left: 70px;
 /*	margin: 0px auto 0px auto;*/
 }
 
 h1, h2 {
-	font-size: 4em;
+	font-size: 3.5em;
 	font-weight: 700;
 	margin-top: 0.5em;
 	margin-bottom: 0.2em;
@@ -103,11 +103,12 @@ div.fatal { color: #B72C2C; }
 .fatal-back { background-color: #B72C2C; }
 
 div.cube {
-	width: 85px;
-	height: 85px;
-	border-radius: 25px;
-	margin-right: 22px;
+	width: 65px;
+	height: 65px;
+	border-radius: 14px;
+	margin-right: 14px;
 	float: left;
+/*	background-image: url(gloss.png);*/
 }
 
 div.rightmost {
