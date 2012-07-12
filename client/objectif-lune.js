@@ -99,7 +99,8 @@ function updateLog() {
 		.text(function(d) { return d.message; })
 	}
 	
-	logs.enter().insert('div', ':first-child')
+	// logs.enter().insert('div', ':first-child')
+	logs.enter().append('div')
 		.call(logLine);
 	
 	logs.transition()
