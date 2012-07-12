@@ -44,13 +44,15 @@ namespace objectifLune
 		void error(std::string msg);
 		void fatal(std::string msg);
 		
+		void sendLogMessage(std::string logLevel, std::string msg);
+		
 	private:
 		
 		ServerHandler* serverHandler;
 		
 		unsigned short portNumber;
 		
-		void sendLogMessage(std::string logLevel, std::string msg);
+
 		
 		void broadcast(std::string datum);
 	};

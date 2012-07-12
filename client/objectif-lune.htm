@@ -4,7 +4,8 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<title>Objectif Lune Client</title>
 
-	<script type="text/javascript" src="d3/d3.v2.js"></script>	
+	<script type="text/javascript" src="d3/d3.v2.js"></script>
+	<script type="text/javascript" src="d3/lib/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="objectif-lune.js"></script>
 
 	
@@ -25,7 +26,7 @@
 	<h1>Objectif Lune</h1>
 	<hr />
 	<p>
-		This is the client side of the moon, working in concert with the server component. I uses websockets for communication and should facitilate debugging and tweaking of games and other interactive applications alike.
+		This is the client side of the moon, working in concert with the server component. It uses websockets for communication and should facitilate debugging and tweaking of games and other interactive applications alike.
 	</p>
 	<p>
 		<input type="text" name="server_url" id="server_url" value="ws://localhost:60600" disabled />
@@ -36,8 +37,17 @@
 	<h2>Logger</h2>
 	<hr />
 	<p>
-		Filter and highlight logging messages.
+		Filter and highlight logging messages. Newest log messages on top.
 	</p>
+	<div style="height: 85px; margin-top: 1em; margin-bottom: 1em;">
+		
+		<div class="cube trace-back" id="toggleTrace">&nbsp;</div>
+		<div class="cube debug-back" id="toggleDebug">&nbsp;</div>
+		<div class="cube info-back" id="toggleInfo">&nbsp;</div>
+		<div class="cube warn-back" id="toggleWarn">&nbsp;</div>
+		<div class="cube error-back" id="toggleError">&nbsp;</div>
+		<div class="cube fatal-back rightmost" id="toggleFatal">&nbsp;</div>
+	</div>
 	
 	<div class="log" id="log"></div>
 	

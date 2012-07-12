@@ -12,6 +12,12 @@ for (var i = 0; i < 100; i++) {
 }
 
 var logData = [];
+var showTrace = true;
+var showDebug = true;
+var showInfo = true;
+var showWarn = true;
+var showError = true;
+var showFatal = true;
 
 var state = connectionState.notConnected;
 
@@ -32,14 +38,13 @@ function connect() {
 	} else if ("MozWebSocket" in window) {
 		ws = new MozWebSocket(url);
 	} else {
-		document.getElementById("messages").innerHTML += "This Browser does not support WebSockets<br />";
+		alert('This Browser does not support WebSockets');
 		return;
 	}
 
 	state = connectionState.connecting;
 
 	ws.onopen = function(e) {
-		document.getElementById("messages").innerHTML += "Client: A connection to " + ws.URL + " has been opened.<br />";
 		notice("connection to " + ws.URL + " established!");
 		
 		document.getElementById("server_url").disabled = true;
@@ -47,14 +52,12 @@ function connect() {
 	};
 	
 	ws.onerror = function(e) {
-		document.getElementById("messages").innerHTML += "Client: An error occured, see console log for more details.<br />";
 		console.log(e);
 		state = connectionState.notConnected;
 	};
 	
 	ws.onclose = function(e) {
 		if (state === connectionState.connected) {
-			document.getElementById("messages").innerHTML += "Client: The connection to " + url + " was closed.<br />";			
 			warn("connection to " + ws.URL + " closed!");
 		}
 		state = connectionState.notConnected;
@@ -79,15 +82,27 @@ function connect() {
 }
 
 function updateLog() {
+	var filteredData = logData.filter(function(d) {
+		return (showTrace && d.level === 'trace') ||
+			(showDebug && d.level === 'debug') ||
+			(showInfo && d.level === 'info') ||
+			(showWarn && d.level === 'warn') ||
+			(showError && d.level === 'error') ||
+			(showFatal && d.level === 'fatal');
+	})
+	
 	var logs = d3.select('#log').selectAll('div')
-		.data(logData);
+		.data(filteredData);
 	
 	var logLine = function(d) {
 		d.attr('class', function(d) { return d.level; })
 		.text(function(d) { return d.message; })
 	}
 	
-	logs.enter().append('div')
+	logs.enter().insert('div', ':first-child')
+		.call(logLine);
+	
+	logs.transition()
 		.call(logLine);
 	
 	logs.exit()
@@ -155,25 +170,75 @@ function auto_connect() {
 	}
 }
 
-function send() {
-	if (ws === undefined || ws.readyState != 1) {
-		document.getElementById("messages").innerHTML += "Client: Websocket is not avaliable for writing<br />";
-		return;
+// function send() {
+// 	if (ws === undefined || ws.readyState != 1) {
+// 		document.getElementById("messages").innerHTML += "Client: Websocket is not avaliable for writing<br />";
+// 		return;
+// 	}
+// 	
+// 	ws.send(document.getElementById("msg").value);
+// 	document.getElementById("msg").value = "";
+// }
+// 
+
+function toggleCube(val, name) {
+	if (val) {
+		d3.select(name)
+			.transition()
+				.duration(200)
+				.attr('style', 'opacity: 1');
 	}
-	
-	ws.send(document.getElementById("msg").value);
-	document.getElementById("msg").value = "";
+	else {
+		d3.select(name)
+			.transition()
+				.duration(200)
+				.attr('style', 'opacity: 0.3');
+	}
 }
 
-// connect when ready
-
-function init() {
-	
+function init() {	
 	plotSVG = d3.select('#plot').append('svg')
 		.attr('width', 620)
 		.attr('height', 155)
 	plotGroup = plotSVG.append('g')
 	
+	$('#toggleTrace').click(function() {
+		showTrace = !showTrace;
+		toggleCube(showTrace, '#toggleTrace');
+		updateLog();
+	});
+	
+	$('#toggleInfo').click(function() {
+		showInfo = !showInfo;
+		toggleCube(showInfo, '#toggleInfo');
+		updateLog();
+	});
+	
+	$('#toggleDebug').click(function() {
+		showDebug = !showDebug;
+		toggleCube(showDebug, '#toggleDebug');
+		updateLog();
+	});
+	
+	$('#toggleWarn').click(function() {
+		showWarn = !showWarn;
+		toggleCube(showWarn, '#toggleWarn');
+		updateLog();
+	});
+	
+	$('#toggleError').click(function() {
+		showError = !showError;
+		toggleCube(showError, '#toggleError');
+		updateLog();
+	});
+	
+	$('#toggleFatal').click(function() {
+		showFatal = !showFatal;
+		toggleCube(showFatal, '#toggleFatal');
+		updateLog();
+	});
+	
+	// connect when ready	
 	setInterval(auto_connect, 500);
 }
 

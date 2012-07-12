@@ -11,7 +11,7 @@
  * info:	#88BEE2
  * warn:	#D8C53D
  * error:	#D8782A
- * critical: #B72C2C
+ * fatal: #B72C2C
  */
 
 body {
@@ -69,6 +69,13 @@ div.notice-area div {
 	margin: 3px;
 }
 
+div.notice-area div.notice {
+	background-color: #88BEE2;
+}
+
+div.notice-area div.warning {
+	background-color: #D8C53D;
+}
 
 div.log {
 	margin-top: 1em;
@@ -86,10 +93,26 @@ div.debug { color: #A6D0E8; }
 div.info { color: #88BEE2; }
 div.warn { color: #D8C53D; }
 div.error { color: #D8782A; }
-div.critical { color: #B72C2C; }
+div.fatal { color: #B72C2C; }
 
+.trace-back { background-color: #C5DDEA; }
+.debug-back { background-color: #A6D0E8; }
+.info-back { background-color: #88BEE2; }
+.warn-back { background-color: #D8C53D; }
+.error-back { background-color: #D8782A; }
+.fatal-back { background-color: #B72C2C; }
 
+div.cube {
+	width: 85px;
+	height: 85px;
+	border-radius: 25px;
+	margin-right: 22px;
+	float: left;
+}
 
+div.rightmost {
+	margin-right: 0px;
+}
 
 
 
