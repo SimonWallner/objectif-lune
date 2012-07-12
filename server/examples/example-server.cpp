@@ -10,9 +10,16 @@ int main(int argc, char *argv[])
 	Server* server = new Server();
 	server->startService();
 	
-	while(true)
+	bool cont = true;
+	while(cont)
 	{
-		server->info("hello, logger");
-		boost::this_thread::sleep(boost::posix_time::seconds(3));
+		std::cout << "sending log message: ";
+		std::string in;
+		std::getline(std::cin, in);
+		
+		if (in == "q")
+			cont = false;
+		else 
+			server->debug(in);
 	}
 }

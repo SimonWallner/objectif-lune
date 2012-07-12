@@ -10,38 +10,36 @@
 	
 	<link type="text/css" rel="stylesheet" href="reset.css" />
 	<link type="text/css" rel="stylesheet" href="style.css" />
-	<link type="text/css" rel="stylesheet" href="960_12_col.css"/>
 	
-	<link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Ovo' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Bitter:400italic,400,700' rel='stylesheet' type='text/css'>
 	
 </head>
 
 <body>
 <div class="notice-area" id="notice-area"></div>
 	
-<div class="container_12">
-	
-	<div class="grid_8">
-		<div id="plot">&nbsp;</div>
-		<div class="log" id="log"></div>
-	</div>
-	
-	<div class="grid_4" id="aux">
-		<div class="rounded grey">
-			<div id="server">
-				<input type="text" name="server_url" id="server_url" value="ws://localhost:60600" disabled />
-				<input type="checkbox" id="autoConnect" checked />
-				<button id="toggle_connect" onclick="disconnect();">Disconnect</button>
-			</div>
 
-			<div id="message_input"><input type="text" name="msg" id="msg" value="Hello World!" />
-				<button onclick="send();">Send</button>
-			</div>
-		</div>	
-		
-		<div class="rounded grey" id="messages">messages</div>
-	</div>
+
+<div class="container">
+	
+	<h1>Objectif Lune</h1>
+	<hr />
+	<p>
+		This is the client side of the moon, working in concert with the server component. I uses websockets for communication and should facitilate debugging and tweaking of games and other interactive applications alike.
+	</p>
+	<p>
+		<input type="text" name="server_url" id="server_url" value="ws://localhost:60600" disabled />
+		<input type="checkbox" id="autoConnect" checked />
+		<button id="toggle_connect" onclick="disconnect();">Disconnect</button>
+	</p>
+			
+	<h2>Logger</h2>
+	<hr />
+	<p>
+		Filter and highlight logging messages.
+	</p>
+	
+	<div class="log" id="log"></div>
 	
 
 	
