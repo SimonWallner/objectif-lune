@@ -89,16 +89,41 @@ void Server::broadcast(std::string datum)
 void Server::sendLogMessage(std::string logLevel, std::string msg)
 {
 	std::stringstream sstr;
-	sstr << "{\"type\": \"log\", \"level\": \""
+	sstr << "{\"type\": \"log\", \"payload\": {\"level\": \""
 		 << logLevel
 		 << "\", \"message\": \""
 		 << msg
-		 << "\"}";
+		 << "\"}}";
 	
 	broadcast(sstr.str());
+}
+
+void Server::trace(std::string msg)
+{
+	sendLogMessage("trace", msg);
+}
+
+void Server::debug(std::string msg)
+{
+	sendLogMessage("debug", msg);
 }
 
 void Server::info(std::string msg)
 {
 	sendLogMessage("info", msg);
+}
+
+void Server::warn(std::string msg)
+{
+	sendLogMessage("warn", msg);
+}
+
+void Server::error(std::string msg)
+{
+	sendLogMessage("error", msg);
+}
+
+void Server::fatal(std::string msg)
+{
+	sendLogMessage("fatal", msg);
 }

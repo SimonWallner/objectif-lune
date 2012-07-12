@@ -1,5 +1,7 @@
 body {
 	background-color: #ededed;
+	font-size: 14px;
+	font-family: 'Ovo';
 }
 
 
@@ -47,6 +49,19 @@ div.warning {
 	background-color: #ff7e00;
 }
 
+div.log {
+	border: solid 2px #ccc;
+	border-radius: 2px;
+	padding: 5px;
+	font-family: 'Inconsolata';
+}
+
+div.log div {
+	margin-top: 2px;
+	background-color: #ccc;
+	border-radius: 1em;
+	padding: 2px 10px 2px 10px;
+}
 
 
 /*

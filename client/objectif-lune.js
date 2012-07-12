@@ -11,6 +11,8 @@ for (var i = 0; i < 100; i++) {
 	dataArray[i] = 0;
 }
 
+var logData = [];
+
 var state = connectionState.notConnected;
 
 var x = d3.scale.linear()
@@ -58,19 +60,38 @@ function connect() {
 		state = connectionState.notConnected;
 	};
 	
-	ws.onmessage = function(msg) {
+	ws.onmessage = function(msg) {	
+		var data = JSON.parse(msg.data);
 		
-		document.getElementById("dump").innerHTML += msg.data + '<br />';
-		// var payload = msg.data;
-		// 
-		// var data = JSON.parse(payload);
-		// dataArray = dataArray.concat(data.payload);
-		// if (dataArray.length > 100) {
-		// 	dataArray.splice(0, dataArray.length - 100);
-		// }
-		// 
-		// update();
+		if (data.type === 'log') {
+			logData.push(data.payload);
+			updateLog();
+		}
+		else if(data.type === 'data') {
+			dataArray = dataArray.concat(data.payload);
+			if (dataArray.length > 100) {
+				dataArray.splice(0, dataArray.length - 100);
+			}
+
+			update();			
+		}
 	};
+}
+
+function updateLog() {
+	var logs = d3.select('#log').selectAll('div')
+		.data(logData);
+	
+	var logLine = function(d) {
+		d.attr('class', function(d) { return d.level; })
+		.text(function(d) { return d.message; })
+	}
+	
+	logs.enter().append('div')
+		.call(logLine);
+	
+	logs.exit()
+		.remove();
 }
 
 function notification(CSSClass, msg) {
@@ -91,6 +112,7 @@ function notice(msg) {
 function warn(msg) {
 	notification('warning', msg);
 }
+
 function update() {
 	var path = plotGroup.selectAll('path')
 		.data([dataArray]);
