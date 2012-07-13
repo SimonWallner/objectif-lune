@@ -12,6 +12,8 @@
  * warn:	#D8C53D
  * error:	#D8782A
  * fatal: #B72C2C
+ *
+ * blue:	#3B5F93
  */
 
 body {
@@ -24,7 +26,7 @@ body {
 
 div.container {
 	width: 460px;
-	margin-left: 70px;
+	margin-left: 50px;
 /*	margin: 0px auto 0px auto;*/
 }
 
@@ -86,6 +88,13 @@ div.log div {
 	background-color: #3F3F3F;
 	border-radius: 2px;
 	padding: 2px 3px 2px 3px;
+}
+
+div.log div.sessionMarker {
+	background-color: #3B5F93;
+	text-align: center;
+	border-radius: 1em;
+	color: #D1D1D1;
 }
 
 div.trace { color: #C5DDEA; }

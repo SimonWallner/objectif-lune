@@ -65,6 +65,10 @@ function connect() {
 		
 		document.getElementById("server_url").disabled = true;
 		state = connectionState.connected;
+		
+		d3.select('#log').append('div')
+			.attr('class', 'sessionMarker')
+			.text('new session started...')
 	};
 	
 	ws.onerror = function(e) {
@@ -83,7 +87,6 @@ function connect() {
 		var data = JSON.parse(msg.data);
 		
 		if (data.type === 'log') {
-			logData.push(data.payload);
 			addLog(data.payload);
 			d3.select('#lineCounter')
 				.text(logData.length);
@@ -100,82 +103,77 @@ function connect() {
 }
 
 function addLog(datum) {
-	// show the logs
-	if (((showTrace != showState.hide) && datum.level === 'trace') ||
-		((showDebug != showState.hide) && datum.level === 'debug') ||
-		((showInfo != showState.hide) && datum.level === 'info') ||
-		((showWarn != showState.hide) && datum.level === 'warn') ||
-		((showError != showState.hide) && datum.level === 'error') ||
-		((showFatal != showState.hide) && datum.level === 'fatal')) 
-		{
-			filteredData.push(datum);
-			
-			var logs = d3.select('#log').selectAll('div')
-				.data(filteredData);
-
-			var logLine = function(d) {
-				d.attr('class', function(d) { return d.level; })
-					.text(function(d) { return d.message; })
-					.style('opacity', function(d) {
-						if (((showTrace === showState.faded) && d.level === 'trace') ||
-							((showDebug === showState.faded) && d.level === 'debug') ||
-							((showInfo === showState.faded) && d.level === 'info') ||
-							((showWarn === showState.faded) && d.level === 'warn') ||
-							((showError === showState.faded) && d.level === 'error') ||
-							((showFatal === showState.faded) && d.level === 'fatal')) {
-							return '0.5';					
-						} else
-							return '1';
-					})
-			}
-			logs.enter().append('div')
-				.call(logLine);				
-		} 
+	logData.push(datum);
+	d3.select('#lineCounter')
+		.text(logData.length);
+	
+	d3.select('#log').selectAll('div')
+		.data(logData)
+			.enter().append('div')
+				.attr('class', function(d) { return d.level; })
+				.text(function(d) { return d.message; })
+				.style('opacity', function(d) {
+					if (((showTrace === showState.faded) && d.level === 'trace') ||
+						((showDebug === showState.faded) && d.level === 'debug') ||
+						((showInfo === showState.faded) && d.level === 'info') ||
+						((showWarn === showState.faded) && d.level === 'warn') ||
+						((showError === showState.faded) && d.level === 'error') ||
+						((showFatal === showState.faded) && d.level === 'fatal')) {
+						return '0.5';					
+					} else
+						return '1';
+				})
+				.style('display', function(d) {
+					if (((showTrace === showState.hide) && d.level === 'trace') ||
+						((showDebug === showState.hide) && d.level === 'debug') ||
+						((showInfo === showState.hide) && d.level === 'info') ||
+						((showWarn === showState.hide) && d.level === 'warn') ||
+						((showError === showState.hide) && d.level === 'error') ||
+						((showFatal === showState.hide) && d.level === 'fatal')) {
+						return 'none';					
+					} else
+						return 'block';
+				})
 }
 
-function updateLog() {
-	
-	// show the logs
-	filteredData = logData.filter(function(d) {
-		return ((showTrace != showState.hide) && d.level === 'trace') ||
-			((showDebug != showState.hide) && d.level === 'debug') ||
-			((showInfo != showState.hide) && d.level === 'info') ||
-			((showWarn != showState.hide) && d.level === 'warn') ||
-			((showError != showState.hide) && d.level === 'error') ||
-			((showFatal != showState.hide) && d.level === 'fatal');
-	})
-	
-	var logs = d3.select('#log').selectAll('div')
-		.data(filteredData);
-	
-	var logLine = function(d) {
-		d.attr('class', function(d) { return d.level; })
-			.text(function(d) { return d.message; })
-	}
-	
-	// logs.enter().insert('div', ':first-child')
-	logs.enter().append('div')
-		.call(logLine);
-		
-	logs.exit()
-		.remove();
-	
-	logs.transition()
-			.duration(0)
-			.call(logLine)
-			// .style('opacity', function(d) {
-			// 	if (((showTrace === showState.faded) && d.level === 'trace') ||
-			// 		((showDebug === showState.faded) && d.level === 'debug') ||
-			// 		((showInfo === showState.faded) && d.level === 'info') ||
-			// 		((showWarn === showState.faded) && d.level === 'warn') ||
-			// 		((showError === showState.faded) && d.level === 'error') ||
-			// 		((showFatal === showState.faded) && d.level === 'fatal')) {
-			// 		return '0.5';					
-			// 	} else
-			// 		return '1';
-			// })
-
-}
+// function updateLog() {
+// 	
+// 	// show the logs
+// 	filteredData = logData.filter(function(d) {
+// 		return ((showTrace != showState.hide) && d.level === 'trace') ||
+// 			((showDebug != showState.hide) && d.level === 'debug') ||
+// 			((showInfo != showState.hide) && d.level === 'info') ||
+// 			((showWarn != showState.hide) && d.level === 'warn') ||
+// 			((showError != showState.hide) && d.level === 'error') ||
+// 			((showFatal != showState.hide) && d.level === 'fatal');
+// 	})
+// 	
+// 	var logs = d3.select('#log').selectAll('div')
+// 		.data(filteredData);
+// 	
+// 	var logLine = function(d) {
+// 		d.attr('class', function(d) { return d.level; })
+// 			.text(function(d) { return d.message; })
+// 	}
+// 	
+// 	// logs.enter().
+// 
+// 	logs.transition()
+// 			.duration(0)
+// 			.call(logLine)
+// 			// .style('opacity', function(d) {
+// 			// 	if (((showTrace === showState.faded) && d.level === 'trace') ||
+// 			// 		((showDebug === showState.faded) && d.level === 'debug') ||
+// 			// 		((showInfo === showState.faded) && d.level === 'info') ||
+// 			// 		((showWarn === showState.faded) && d.level === 'warn') ||
+// 			// 		((showError === showState.faded) && d.level === 'error') ||
+// 			// 		((showFatal === showState.faded) && d.level === 'fatal')) {
+// 			// 		return '0.5';					
+// 			// 	} else
+// 			// 		return '1';
+// 			// })
+// 
+// }
 
 function notification(CSSClass, msg) {
 	d3.select('#notice-area').append('div')
@@ -249,18 +247,26 @@ function auto_connect() {
 // }
 // 
 
-function toggleCube(state, name) {
+function toggleCube(state, name, cls) {
 	if (state === showState.show) {
 		d3.select(name)
 			.transition()
 				.duration(200)
 				.style('opacity', 1);
+				
+		d3.selectAll('div.log div.' + cls)
+			.style('opacity', 1)
+			.style('display', 'block');
 	}
 	else if (state === showState.faded) {
 		d3.select(name)
 			.transition()
 				.duration(200)
 				.style('opacity', 0.5);
+		
+		d3.selectAll('div.log div.' + cls)
+			.style('opacity', 0.5)
+			.style('display', 'block');
 	}
 	
 	else if (state === showState.hide) {
@@ -269,6 +275,9 @@ function toggleCube(state, name) {
 				.duration(200)
 				.style('opacity', 0.1);
 				
+		d3.selectAll('div.log div.' + cls)
+			.style('opacity', 0.1)
+			.style('display', 'none');
 	}
 }
 
@@ -280,38 +289,32 @@ function init() {
 	
 	$('#toggleTrace').click(function() {
 		showTrace = nextShowState(showTrace);
-		toggleCube(showTrace, '#toggleTrace');
-		updateLog();
+		toggleCube(showTrace, '#toggleTrace', 'trace');
 	});
 	
 	$('#toggleInfo').click(function() {
 		showInfo = nextShowState(showInfo);
-		toggleCube(showInfo, '#toggleInfo');
-		updateLog();
+		toggleCube(showInfo, '#toggleInfo', 'info');
 	});
 	
 	$('#toggleDebug').click(function() {
 		showDebug = nextShowState(showDebug);
-		toggleCube(showDebug, '#toggleDebug');
-		updateLog();
+		toggleCube(showDebug, '#toggleDebug', 'debug');
 	});
 	
 	$('#toggleWarn').click(function() {
 		showWarn = nextShowState(showWarn);
-		toggleCube(showWarn, '#toggleWarn');
-		updateLog();
+		toggleCube(showWarn, '#toggleWarn', 'warn');
 	});
 	
 	$('#toggleError').click(function() {
 		showError = nextShowState(showError);
-		toggleCube(showError, '#toggleError');
-		updateLog();
+		toggleCube(showError, '#toggleError', 'error');
 	});
 	
 	$('#toggleFatal').click(function() {
 		showFatal = nextShowState(showFatal);
-		toggleCube(showFatal, '#toggleFatal');
-		updateLog();
+		toggleCube(showFatal, '#toggleFatal', 'fatal');
 	});
 	
 	
