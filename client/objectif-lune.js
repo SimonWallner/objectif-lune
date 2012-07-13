@@ -12,6 +12,7 @@ for (var i = 0; i < 100; i++) {
 }
 
 var logData = [];
+var filteredData = [];
 
 var showState = {
 	show: 'show',
@@ -83,7 +84,9 @@ function connect() {
 		
 		if (data.type === 'log') {
 			logData.push(data.payload);
-			updateLog();
+			addLog(data.payload);
+			d3.select('#lineCounter')
+				.text(logData.length);
 		}
 		else if(data.type === 'data') {
 			dataArray = dataArray.concat(data.payload);
@@ -96,10 +99,44 @@ function connect() {
 	};
 }
 
+function addLog(datum) {
+	// show the logs
+	if (((showTrace != showState.hide) && datum.level === 'trace') ||
+		((showDebug != showState.hide) && datum.level === 'debug') ||
+		((showInfo != showState.hide) && datum.level === 'info') ||
+		((showWarn != showState.hide) && datum.level === 'warn') ||
+		((showError != showState.hide) && datum.level === 'error') ||
+		((showFatal != showState.hide) && datum.level === 'fatal')) 
+		{
+			filteredData.push(datum);
+			
+			var logs = d3.select('#log').selectAll('div')
+				.data(filteredData);
+
+			var logLine = function(d) {
+				d.attr('class', function(d) { return d.level; })
+					.text(function(d) { return d.message; })
+					.style('opacity', function(d) {
+						if (((showTrace === showState.faded) && d.level === 'trace') ||
+							((showDebug === showState.faded) && d.level === 'debug') ||
+							((showInfo === showState.faded) && d.level === 'info') ||
+							((showWarn === showState.faded) && d.level === 'warn') ||
+							((showError === showState.faded) && d.level === 'error') ||
+							((showFatal === showState.faded) && d.level === 'fatal')) {
+							return '0.5';					
+						} else
+							return '1';
+					})
+			}
+			logs.enter().append('div')
+				.call(logLine);				
+		} 
+}
+
 function updateLog() {
 	
 	// show the logs
-	var filteredData = logData.filter(function(d) {
+	filteredData = logData.filter(function(d) {
 		return ((showTrace != showState.hide) && d.level === 'trace') ||
 			((showDebug != showState.hide) && d.level === 'debug') ||
 			((showInfo != showState.hide) && d.level === 'info') ||
@@ -124,37 +161,20 @@ function updateLog() {
 		.remove();
 	
 	logs.transition()
-		.duration(0)
-		.call(logLine)
-		.style('opacity', function(d) {
-			if (((showTrace === showState.faded) && d.level === 'trace') ||
-				((showDebug === showState.faded) && d.level === 'debug') ||
-				((showInfo === showState.faded) && d.level === 'info') ||
-				((showWarn === showState.faded) && d.level === 'warn') ||
-				((showError === showState.faded) && d.level === 'error') ||
-				((showFatal === showState.faded) && d.level === 'fatal')) {
-				return '0.5';					
-			} else
-				return '1';
-		})
-	
-	// 	
-	// // fade the logs
-	// var fade = function(level, state) {
-	// 	var divs = d3.selectAll('#log').selectAll('div.' + level)
-	// 	
-	// 	if (state === showState.faded)
-	// 		divs.style('opacity', '0.5');
-	// 	else
-	// 		divs.style('opacity', '1');
-	// }
-	// 
-	// fade('trace', showTrace);
-	// fade('debug', showDebug);
-	// fade('info', showInfo);
-	// fade('warn', showWarn);
-	// fade('error', showError);
-	// fade('fatal', showFatal);
+			.duration(0)
+			.call(logLine)
+			// .style('opacity', function(d) {
+			// 	if (((showTrace === showState.faded) && d.level === 'trace') ||
+			// 		((showDebug === showState.faded) && d.level === 'debug') ||
+			// 		((showInfo === showState.faded) && d.level === 'info') ||
+			// 		((showWarn === showState.faded) && d.level === 'warn') ||
+			// 		((showError === showState.faded) && d.level === 'error') ||
+			// 		((showFatal === showState.faded) && d.level === 'fatal')) {
+			// 		return '0.5';					
+			// 	} else
+			// 		return '1';
+			// })
+
 }
 
 function notification(CSSClass, msg) {
@@ -294,6 +314,13 @@ function init() {
 		updateLog();
 	});
 	
+	
+	$('#clearLog').click(function() {
+		logData = [];
+		d3.select('#lineCounter')
+			.text('--');
+		updateLog();
+	})
 	// connect when ready	
 	setInterval(auto_connect, 500);
 }
