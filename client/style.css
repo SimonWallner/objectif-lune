@@ -102,13 +102,19 @@ div.fatal { color: #B72C2C; }
 .error-back { background-color: #D8782A; }
 .fatal-back { background-color: #B72C2C; }
 
+.trace-border { border-color: #C5DDEA; }
+.debug-border { border-color: #A6D0E8; }
+.info-border { border-color: #88BEE2; }
+.warn-border { border-color: #D8C53D; }
+.error-border { border-color: #D8782A; }
+.fatal-border { border-color: #B72C2C; }
+
 div.cube {
 	width: 65px;
 	height: 65px;
 	border-radius: 14px;
 	margin-right: 14px;
 	float: left;
-/*	background-image: url(gloss.png);*/
 }
 
 div.rightmost {

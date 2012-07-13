@@ -12,12 +12,27 @@ for (var i = 0; i < 100; i++) {
 }
 
 var logData = [];
-var showTrace = true;
-var showDebug = true;
-var showInfo = true;
-var showWarn = true;
-var showError = true;
-var showFatal = true;
+
+var showState = {
+	show: 'show',
+	hide: 'hide',
+	faded: 'faded'
+}
+var showTrace = showState.show;
+var showDebug = showState.show;
+var showInfo = showState.show;
+var showWarn = showState.show;
+var showError = showState.show;
+var showFatal = showState.show;
+
+function nextShowState(state) {
+	if (state === showState.show)
+		return showState.faded;
+	else if (state == showState.faded)
+		return showState.hide;
+	else
+		return showState.show;
+}
 
 var state = connectionState.notConnected;
 
@@ -82,13 +97,15 @@ function connect() {
 }
 
 function updateLog() {
+	
+	// show the logs
 	var filteredData = logData.filter(function(d) {
-		return (showTrace && d.level === 'trace') ||
-			(showDebug && d.level === 'debug') ||
-			(showInfo && d.level === 'info') ||
-			(showWarn && d.level === 'warn') ||
-			(showError && d.level === 'error') ||
-			(showFatal && d.level === 'fatal');
+		return ((showTrace != showState.hide) && d.level === 'trace') ||
+			((showDebug != showState.hide) && d.level === 'debug') ||
+			((showInfo != showState.hide) && d.level === 'info') ||
+			((showWarn != showState.hide) && d.level === 'warn') ||
+			((showError != showState.hide) && d.level === 'error') ||
+			((showFatal != showState.hide) && d.level === 'fatal');
 	})
 	
 	var logs = d3.select('#log').selectAll('div')
@@ -96,18 +113,48 @@ function updateLog() {
 	
 	var logLine = function(d) {
 		d.attr('class', function(d) { return d.level; })
-		.text(function(d) { return d.message; })
+			.text(function(d) { return d.message; })
 	}
 	
 	// logs.enter().insert('div', ':first-child')
 	logs.enter().append('div')
 		.call(logLine);
-	
-	logs.transition()
-		.call(logLine);
-	
+		
 	logs.exit()
 		.remove();
+	
+	logs.transition()
+		.duration(0)
+		.call(logLine)
+		.style('opacity', function(d) {
+			if (((showTrace === showState.faded) && d.level === 'trace') ||
+				((showDebug === showState.faded) && d.level === 'debug') ||
+				((showInfo === showState.faded) && d.level === 'info') ||
+				((showWarn === showState.faded) && d.level === 'warn') ||
+				((showError === showState.faded) && d.level === 'error') ||
+				((showFatal === showState.faded) && d.level === 'fatal')) {
+				return '0.5';					
+			} else
+				return '1';
+		})
+	
+	// 	
+	// // fade the logs
+	// var fade = function(level, state) {
+	// 	var divs = d3.selectAll('#log').selectAll('div.' + level)
+	// 	
+	// 	if (state === showState.faded)
+	// 		divs.style('opacity', '0.5');
+	// 	else
+	// 		divs.style('opacity', '1');
+	// }
+	// 
+	// fade('trace', showTrace);
+	// fade('debug', showDebug);
+	// fade('info', showInfo);
+	// fade('warn', showWarn);
+	// fade('error', showError);
+	// fade('fatal', showFatal);
 }
 
 function notification(CSSClass, msg) {
@@ -182,18 +229,26 @@ function auto_connect() {
 // }
 // 
 
-function toggleCube(val, name) {
-	if (val) {
+function toggleCube(state, name) {
+	if (state === showState.show) {
 		d3.select(name)
 			.transition()
 				.duration(200)
-				.attr('style', 'opacity: 1');
+				.style('opacity', 1);
 	}
-	else {
+	else if (state === showState.faded) {
 		d3.select(name)
 			.transition()
 				.duration(200)
-				.attr('style', 'opacity: 0.3');
+				.style('opacity', 0.5);
+	}
+	
+	else if (state === showState.hide) {
+		d3.select(name)
+			.transition()
+				.duration(200)
+				.style('opacity', 0.1);
+				
 	}
 }
 
@@ -204,37 +259,37 @@ function init() {
 	plotGroup = plotSVG.append('g')
 	
 	$('#toggleTrace').click(function() {
-		showTrace = !showTrace;
+		showTrace = nextShowState(showTrace);
 		toggleCube(showTrace, '#toggleTrace');
 		updateLog();
 	});
 	
 	$('#toggleInfo').click(function() {
-		showInfo = !showInfo;
+		showInfo = nextShowState(showInfo);
 		toggleCube(showInfo, '#toggleInfo');
 		updateLog();
 	});
 	
 	$('#toggleDebug').click(function() {
-		showDebug = !showDebug;
+		showDebug = nextShowState(showDebug);
 		toggleCube(showDebug, '#toggleDebug');
 		updateLog();
 	});
 	
 	$('#toggleWarn').click(function() {
-		showWarn = !showWarn;
+		showWarn = nextShowState(showWarn);
 		toggleCube(showWarn, '#toggleWarn');
 		updateLog();
 	});
 	
 	$('#toggleError').click(function() {
-		showError = !showError;
+		showError = nextShowState(showError);
 		toggleCube(showError, '#toggleError');
 		updateLog();
 	});
 	
 	$('#toggleFatal').click(function() {
-		showFatal = !showFatal;
+		showFatal = nextShowState(showFatal);
 		toggleCube(showFatal, '#toggleFatal');
 		updateLog();
 	});
