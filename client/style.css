@@ -38,6 +38,10 @@ h1, h2 {
 	color: #E8E8E8;
 }
 
+h2 {
+	margin-top: 70px;
+}
+
 
 p {
 	color: #E8E8E8;
@@ -151,8 +155,30 @@ span.lines {
 	padding
 }
 
+input {
+	background-color: #3F3F3F;
+	color: #E8E8E8;
+	border: none;
+	font-family: 'Bitter';
+	font-weight: 700;
+	width: auto;
+}
+
+button {
+	background-color: #B72C2C;
+	border-radius: 1em;
+	border: none;
+	font-family: 'Bitter';
+	color: #D1D1D1;
+}
 
 
+div.tile {
+	width: 150px;
+	margin-right: 5px;
+	background-color: 3F3F3F;
+	float: left;
+}
 
 
 

@@ -29,11 +29,23 @@
 		This is the client side of the moon, working in concert with the server component. It uses websockets for communication and should facitilate debugging and tweaking of games and other interactive applications alike.
 	</p>
 	<p>
-		<input type="text" name="server_url" id="server_url" value="ws://localhost:60600" disabled />
-		<input type="checkbox" id="autoConnect" checked />
+		ULR: <input type="text" name="server_url" id="server_url" value="ws://localhost:60600" disabled /><br/>
+		auto connect:<input type="checkbox" id="autoConnect" checked />
 		<button id="toggle_connect" onclick="disconnect();">Disconnect</button>
 	</p>
-			
+		
+	<h2>Scalar Data</h2>
+	<hr />
+	<p>
+		This view shows the last communicated values of all known variables. Click a tile to highlight it.
+	</p>
+	
+	<div id="scalar" class="scalar"></div>
+
+
+
+		
+	<!-- ========================== LOGGER =============================== -->
 	<h2>Logger</h2>
 	<hr />
 	<p>

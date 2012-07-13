@@ -8,6 +8,8 @@ include_directories(
 add_library(objectif-lune
 	objectifLune.cpp
 	objectifLune.hpp
+	serverHandler.hpp
+	serverHandler.cpp
 )
 
 target_link_libraries(objectif-lune
