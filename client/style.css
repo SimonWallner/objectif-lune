@@ -130,7 +130,7 @@ div.cube {
 	float: left;
 }
 
-div.rightmost {
+div.cube:last-child {
 	margin-right: 0px;
 }
 
@@ -172,13 +172,25 @@ button {
 	color: #D1D1D1;
 }
 
+div.scalar {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
 
 div.tile {
 	width: 150px;
+	height: 150px;
 	margin-right: 5px;
-	background-color: 3F3F3F;
+	margin-top: 5px;
+	background-color: #3F3F3F;
 	float: left;
+	border-radius: 0.5em;
 }
+
+div.tile:nth-child(3n) {
+	margin-right: 0px;
+}
+
 
 
 

@@ -40,7 +40,15 @@
 		This view shows the last communicated values of all known variables. Click a tile to highlight it.
 	</p>
 	
-	<div id="scalar" class="scalar"></div>
+	<div id="scalar" class="scalar">
+		<div class="tile">&nbsp;</div>
+		<div class="tile">&nbsp;</div>
+		<div class="tile">&nbsp;</div>
+		<div class="tile">&nbsp;</div>
+		<div class="tile">&nbsp;</div>
+		<div class="tile">&nbsp;</div>
+	</div>
+	<div style="clear: both;"></div>
 
 
 
@@ -51,15 +59,16 @@
 	<p>
 		Filter and highlight logging messages. Newest log messages on top.
 	</p>
-	<div style="height: 85px; margin-top: 1em; margin-bottom: 1em;">
+	<div style="height:65px; margin-top: 1em; margin-bottom: 1em;">
 		
 		<div class="cube trace-back" id="toggleTrace">&nbsp;</div>
 		<div class="cube debug-back" id="toggleDebug">&nbsp;</div>
 		<div class="cube info-back" id="toggleInfo">&nbsp;</div>
 		<div class="cube warn-back" id="toggleWarn">&nbsp;</div>
 		<div class="cube error-back" id="toggleError">&nbsp;</div>
-		<div class="cube fatal-back rightmost" id="toggleFatal">&nbsp;</div>
+		<div class="cube fatal-back" id="toggleFatal">&nbsp;</div>
 	</div>
+	<div style="clear: both;"></div>
 	
 	<span class="lines rounded-inline">
 		<span id="lineCounter" class="rounded-inline">--</span> lines logged
