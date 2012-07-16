@@ -178,25 +178,61 @@ div.scalar {
 }
 
 div.tile {
-	width: 150px;
-	height: 150px;
+	width: 134px;
+	height: 134px;
 	margin-right: 5px;
 	margin-top: 5px;
 	background-color: #3F3F3F;
 	float: left;
 	border-radius: 0.5em;
+	padding: 8px;
 }
 
 div.tile:nth-child(3n) {
 	margin-right: 0px;
 }
 
+div.tile div.name {
+	color: #88BEE2;
+}
+
+div.tile div.value {
+	line-height: 80x;
+/*	margin-bottom: -10px;*/
+	text-align: center;
+	font-size: 4em;
+	font-weight: 700;
+}
+
+div.tile hr {
+	height: 3px;
+}
+
+div.tile div.minMax {
+	margin-top: 6px;
+	float: left;
+	width: 67px;
+}
+
+div.tile div.minMax span.label {
+	font-size: .8em;
+	color: #D1D1D1;
+}
+
+div.tile span.minValue, div.tile span.maxValue {
+	font-size: 1.3em;
+}
+
+div.highlighted {
+	background-color: #3B5F93;
+}
 
 
 
-/*
- * SVG styles
- */
+
+
+
+/* =========================== SVG styles ============================== */
 #plot path {
 	fill: none;
  	stroke: #ff7e00;

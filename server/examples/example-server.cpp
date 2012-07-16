@@ -20,6 +20,9 @@ int main(int argc, char *argv[])
 		boost::this_thread::sleep(boost::posix_time::milliseconds(delay));
 		
 		server->scalar("textures loaded", (rand() & 9));
+		server->scalar("lucky number", (rand() & 99));
+		server->scalar("fraction of a whole", (float)(rand() & 99) /3.0f);
+		
 		server->info("Uh, everything's under control. Situation normal.");
 		boost::this_thread::sleep(boost::posix_time::milliseconds(delay));
 		

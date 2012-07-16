@@ -29,6 +29,7 @@ var showFatal = showState.show;
 
 // ==== Scalar Data ====
 var scalarData = [];
+var scalarID = 0;
 
 
 
@@ -102,44 +103,85 @@ function connect() {
 			var scalar = data.payload;
 			var entry = scalarData[scalar.name];
 			
-			if (entry) {
+			if (entry) { // scalar is already known
 				entry.value = scalar.value;
+				d3.select('#scalar-' + entry.id + ' div.value')
+					.text(scalar.value)
 				
-				if (scalar.value > entry.max)
-					entry.max = scalar.value;
-				if (scalar.value < entry.min)
+				if (scalar.value < entry.min) {
 					entry.min = scalar.value;
+					d3.select('#scalar-' + entry.id + ' span.minValue')
+						.text(entry.min)
+				}
+				
+				if (scalar.value > entry.max) {
+					entry.max = scalar.value
+					d3.select('#scalar-' + entry.id + ' span.maxValue')
+						.text(entry.max)
+				}
 			}
-			else {
-				scalarData[scalar.name] = {
+			else { // scalar is NEW
+				var entry = scalarData[scalar.name] = {
 					value: scalar.value,
 					min: scalar.value,
-					max: scalar.value
+					max: scalar.value,
+					id: scalarID++,
+					highlighted: false
 				};
+				
+				var tile = d3.select('#scalar').append('div')
+					.attr('class', 'tile')
+					.attr('id', 'scalar-' + entry.id)
+				tile.append('div')
+					.attr('class', 'name')
+					.text(scalar.name);
+				tile.append('div')
+					.attr('class', 'value')
+					.text(scalar.value);
+				tile.append('hr');
+				
+				
+				var min = tile.append('div')
+					.attr('class', 'minMax')			
+				min.append('span')
+					.attr('class', 'label')
+					.text('min');
+				min.append('br');
+				min.append('span')
+					.attr('class', 'minValue')
+					.text(entry.min);
+				
+				
+				var max = tile.append('div')
+					.attr('class', 'minMax')
+				max.append('span')
+					.attr('class', 'label')
+					.text('max');
+				max.append('br');
+				max.append('span')
+					.attr('class', 'maxValue')
+					.text(entry.min);
+					
+				// make it clickable
+				$('#scalar-' + entry.id).click(function() {
+					entry.highlighted = !entry.highlighted;
+					
+					if (entry.highlighted) {
+						d3.select('#scalar-' + entry.id)
+							.attr('class', 'tile highlighted')
+					}
+					else {
+						d3.select('#scalar-' + entry.id)
+							.attr('class', 'tile')
+					}
+							
+				})
 			}
-			
-			updateScalar();
 		}
-
-		
-		// else if(data.type === 'data') {
-		// 	dataArray = dataArray.concat(data.payload);
-		// 	if (dataArray.length > 100) {
-		// 		dataArray.splice(0, dataArray.length - 100);
-		// 	}
-		// 	update();			
-		// }
 	};
 }
 
-function updateScalar() {
-	var tiles = d3.select('#scalar').selectAll('div')
-		.data(scalarData);
-		// scalar ain't no array, but an object...
-	
-	tiles.enter().append('div')
-		.attr('class', 'tile')
-}
+
 
 function addLog(datum) {
 	logData.push(datum);
@@ -174,45 +216,6 @@ function addLog(datum) {
 						return 'block';
 				})
 }
-
-// function updateLog() {
-// 	
-// 	// show the logs
-// 	filteredData = logData.filter(function(d) {
-// 		return ((showTrace != showState.hide) && d.level === 'trace') ||
-// 			((showDebug != showState.hide) && d.level === 'debug') ||
-// 			((showInfo != showState.hide) && d.level === 'info') ||
-// 			((showWarn != showState.hide) && d.level === 'warn') ||
-// 			((showError != showState.hide) && d.level === 'error') ||
-// 			((showFatal != showState.hide) && d.level === 'fatal');
-// 	})
-// 	
-// 	var logs = d3.select('#log').selectAll('div')
-// 		.data(filteredData);
-// 	
-// 	var logLine = function(d) {
-// 		d.attr('class', function(d) { return d.level; })
-// 			.text(function(d) { return d.message; })
-// 	}
-// 	
-// 	// logs.enter().
-// 
-// 	logs.transition()
-// 			.duration(0)
-// 			.call(logLine)
-// 			// .style('opacity', function(d) {
-// 			// 	if (((showTrace === showState.faded) && d.level === 'trace') ||
-// 			// 		((showDebug === showState.faded) && d.level === 'debug') ||
-// 			// 		((showInfo === showState.faded) && d.level === 'info') ||
-// 			// 		((showWarn === showState.faded) && d.level === 'warn') ||
-// 			// 		((showError === showState.faded) && d.level === 'error') ||
-// 			// 		((showFatal === showState.faded) && d.level === 'fatal')) {
-// 			// 		return '0.5';					
-// 			// 	} else
-// 			// 		return '1';
-// 			// })
-// 
-// }
 
 function notification(CSSClass, msg) {
 	d3.select('#notice-area').append('div')
