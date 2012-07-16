@@ -184,7 +184,15 @@ function connect() {
 }
 
 function newSessionStarted() {
+	// pre new session
+	d3.select('#scalar-session-' + (sessionID))
+		.transition().duration(500)
+			.style('opacity', 0.5)
+			
+	// new session
 	sessionID++;
+	
+	// post new session
 	d3.select('#log').append('div')
 		.attr('class', 'sessionMarker')
 		.text('new session started...');
@@ -194,7 +202,6 @@ function newSessionStarted() {
 		.text('new session started...')
 	d3.select('#scalar').append('div')
 		.attr('id', 'scalar-session-' + sessionID)
-		
 	scalarData = [];
 }
 
