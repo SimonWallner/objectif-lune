@@ -225,7 +225,7 @@ function updatePlot(name, datum, reference) {
 	if (datum > entry.max)
 		entry.max = datum;
 		
-	if (entry.data.length > 100)
+	if (entry.data.length > 500)
 		entry.data.splice(0, 1);
 
 

@@ -10,16 +10,16 @@ int main(int argc, char *argv[])
 	Server* server = new Server();
 	server->startService();
 	
-	int delay = 100;
+	int delay = 5;
 	unsigned long frameCounter = 0;
 	while(true)
 	{
-		server->scalar("frame time", 20.0f + (rand() & 100) / 20);
-		server->scalar("long time field", 2000.0f + (rand() & 1000) / 20);
-		server->scalar("textures loaded", (rand() & 9));
-		server->scalar("lucky number", (rand() & 99));
-		server->scalar("fraction of a whole", (float)(rand() & 99) /3.0f);
-		
+//		server->scalar("frame time", 20.0f + (rand() & 100) / 20);
+//		server->scalar("long time field", 2000.0f + (rand() & 1000) / 20);
+//		server->scalar("textures loaded", (rand() & 9));
+//		server->scalar("lucky number", (rand() & 99));
+//		server->scalar("fraction of a whole", (float)(rand() & 99) /3.0f);
+//		
 //		server->info("Uh, everything's under control. Situation normal.");
 		
 		server->data(frameCounter, "frame time", (float)(rand() % 99999) / 100.0f);
