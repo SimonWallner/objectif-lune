@@ -84,3 +84,17 @@ void Server::scalar(std::string name, float value)
 	
 	serverHandler->broadcast(sstr.str());
 }
+
+void Server::data(float reference, std::string name, float value)
+{
+	std::stringstream sstr;
+	sstr << "{\"type\": \"data\", \"payload\": {\"name\": ";
+	sstr << "\"" << name << "\"";
+	sstr << ", \"reference\": ";
+	sstr << reference;
+	sstr << ", \"value\": ";
+	sstr << value;
+	sstr << "}}";
+
+	serverHandler->broadcast(sstr.str());
+}

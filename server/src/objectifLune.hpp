@@ -26,7 +26,11 @@ namespace objectifLune
 		void scalar(std::string name, float value);
 		
 		// sending time domain telemetry data
-//		void data(unsigned long reference, std::string name, float value);
+		void data(float reference, std::string name, float value);
+		
+		// register a float variable for tweaking
+//		void registerVariable(std::string name, float* pointer, float min, float max, std::string description);
+//		void registerVariable(std::string name, bool* pointer, std::string description);
 	private:
 		
 		ServerHandler* serverHandler;

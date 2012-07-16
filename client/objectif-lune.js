@@ -31,6 +31,10 @@ var showFatal = showState.show;
 var scalarData = [];
 var scalarID = 0;
 
+// ==== Time Series Data ====
+var timeSeriesData = [];
+var plotID = 0;
+
 // ==== session stuff ====
 var sessionID = 0;
 
@@ -180,7 +184,79 @@ function connect() {
 				})
 			}
 		}
+		else if (data.type == 'data') {
+			var pl = data.payload
+			entry = timeSeriesData[pl.name];
+			
+			if (entry) // plot already exists
+			{
+				updatePlot(pl.name, pl.value, pl.reference);
+			} else {
+				entry = timeSeriesData[data.payload.name] = {
+					data: [],
+					id: plotID++,
+					min: pl.value,
+					max: pl.value
+				}
+				
+				var div = d3.select('#data').append('div')
+					.attr('id', 'plot-' + entry.id)
+					.attr('class', 'plot');
+				
+				div.append('span')
+					.attr('class', 'name')
+					.text(pl.name);
+				
+				entry.svg = div.append('svg')
+					.attr('width', 444)
+					.attr('height', 148)
+					
+				updatePlot(pl.name, pl.value, pl.reference);
+			}
+		}
 	};
+}
+
+function updatePlot(name, datum, reference) {
+	entry = timeSeriesData[name];
+	entry.data.push({x: reference, y: datum});
+	if (datum < entry.min)
+		entry.min = datum;
+	if (datum > entry.max)
+		entry.max = datum;
+		
+	if (entry.data.length > 100)
+		entry.data.splice(0, 1);
+
+
+	var minX = entry.data[0].x;
+	var maxX = last(entry.data).x;
+	
+	var x = d3.scale.linear()
+		.domain([entry.data[0].x, last(entry.data).x])
+		.range([0, 444]);
+	
+	var y = d3.scale.linear()
+		.domain([entry.min, entry.max])
+		.range([148, 0])
+	
+	var path = entry.svg.selectAll('path')
+		.data([entry.data])
+	
+	var drawPath = function(d) {
+		d.attr('d', d3.svg.line() 
+			.x(function(d) { return x(d.x); })
+			.y(function(d) { return y(d.y); })
+			.interpolate('linear'));
+	}
+	
+	path.enter().append('path')
+		.call(drawPath)
+	
+	path.transition()
+		.duration(0)
+		.call(drawPath)
+	
 }
 
 function newSessionStarted() {
@@ -258,32 +334,6 @@ function warn(msg) {
 	notification('warning', msg);
 }
 
-function update() {
-	var path = plotGroup.selectAll('path')
-		.data([dataArray]);
-
-	var drawPath = function(d) {
-		d.attr('d', d3.svg.line()
-			.x(function(d,i) {return x(i); })
-			.y(y)
-			.interpolate('linear'))
-			
-	}
-	
-	path.enter().append('path')
-		.call(drawPath);
-	
-	path.transition()
-		.duration(0)
-		.call(drawPath);
-	
-	// plotGroup
-	// 	.attr('transform', 'translate(' + x(2) + ', 0)')
-	// 	.transition()
-	// 		.duration(500)
-	// 			.attr('transform', 'translate(' + x(0) + ', 0)')
-	
-}
 
 function disconnect() {
 	ws.close();
@@ -300,16 +350,6 @@ function auto_connect() {
 	}
 }
 
-// function send() {
-// 	if (ws === undefined || ws.readyState != 1) {
-// 		document.getElementById("messages").innerHTML += "Client: Websocket is not avaliable for writing<br />";
-// 		return;
-// 	}
-// 	
-// 	ws.send(document.getElementById("msg").value);
-// 	document.getElementById("msg").value = "";
-// }
-// 
 
 function toggleCube(state, name, cls) {
 	if (state === showState.show) {
@@ -418,4 +458,8 @@ function round(value, decimals) {
 	decimals = decimals || 0;
 	var v = value * Math.pow(10, decimals);
 	return Math.round(v) / Math.pow(10, decimals);
+}
+
+function last(arr) {
+	return arr[arr.length-1];
 }

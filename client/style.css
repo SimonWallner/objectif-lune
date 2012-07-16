@@ -201,7 +201,7 @@ div.tile:last-child {
 	margin-bottom: 5px;
 }
 
-div.tile div.name {
+div.tile div.name, div.data span.name {
 	color: #88BEE2;
 }
 
@@ -238,13 +238,33 @@ div.highlighted {
 }
 
 
+/* time series data */
+div.plot {
+	width: 444px;
+/*	height: 134px;*/
+	margin-top: 5px;
+	background-color: #3F3F3F;
+	border-radius: 0.5em;
+	padding: 8px;
+	overflow: hidden;
+}
 
+div.plot svg {
+	margin-top: 0.5em;
+	/* somehow there is too much space beneath the svg */
+	margin-bottom: -3px; 
+}
 
+svg {
+	background-color: transparent;
+}
 
 
 /* =========================== SVG styles ============================== */
-#plot path {
+
+
+path {
 	fill: none;
- 	stroke: #ff7e00;
+ 	stroke: #D8C53D;
 	stroke-width: 2px;
 }
