@@ -390,6 +390,17 @@ function init() {
 		d3.selectAll('div.log div')
 			.remove();
 	})
+	
+	$('#clearScalar').click(function() {
+		scalarData = [];
+		
+		d3.selectAll('div.scalar div')
+			.remove();
+		
+		d3.select('#scalar').append('div')
+			.attr('id', 'scalar-session-' + sessionID)
+	})
+	
 	// connect when ready	
 	setInterval(auto_connect, 500);
 }
