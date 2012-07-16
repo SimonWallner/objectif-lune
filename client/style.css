@@ -186,6 +186,7 @@ div.tile {
 	float: left;
 	border-radius: 0.5em;
 	padding: 8px;
+	overflow: hidden;
 }
 
 div.tile:nth-child(3n) {
@@ -212,6 +213,7 @@ div.tile div.minMax {
 	margin-top: 6px;
 	float: left;
 	width: 67px;
+	overflow: hidden;
 }
 
 div.tile div.minMax span.label {

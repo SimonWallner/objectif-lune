@@ -106,18 +106,18 @@ function connect() {
 			if (entry) { // scalar is already known
 				entry.value = scalar.value;
 				d3.select('#scalar-' + entry.id + ' div.value')
-					.text(scalar.value)
+					.text(round(scalar.value, 2))
 				
 				if (scalar.value < entry.min) {
 					entry.min = scalar.value;
 					d3.select('#scalar-' + entry.id + ' span.minValue')
-						.text(entry.min)
+						.text(round(entry.min, 2))
 				}
 				
 				if (scalar.value > entry.max) {
 					entry.max = scalar.value
 					d3.select('#scalar-' + entry.id + ' span.maxValue')
-						.text(entry.max)
+						.text(round(entry.max, 2))
 				}
 			}
 			else { // scalar is NEW
@@ -137,7 +137,7 @@ function connect() {
 					.text(scalar.name);
 				tile.append('div')
 					.attr('class', 'value')
-					.text(scalar.value);
+					.text(round(scalar.value, 2));
 				tile.append('hr');
 				
 				
@@ -149,7 +149,7 @@ function connect() {
 				min.append('br');
 				min.append('span')
 					.attr('class', 'minValue')
-					.text(entry.min);
+					.text(round(entry.min, 2));
 				
 				
 				var max = tile.append('div')
@@ -160,7 +160,7 @@ function connect() {
 				max.append('br');
 				max.append('span')
 					.attr('class', 'maxValue')
-					.text(entry.min);
+					.text(round(entry.min, 2));
 					
 				// make it clickable
 				$('#scalar-' + entry.id).click(function() {
@@ -380,3 +380,9 @@ var readyStateCheckInterval = setInterval(function() {
 	   }
 }, 10);
 
+// ================================= util ================================
+function round(value, decimals) {
+	decimals = decimals || 0;
+	var v = value * Math.pow(10, decimals);
+	return Math.round(v) / Math.pow(10, decimals);
+}
