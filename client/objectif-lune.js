@@ -31,7 +31,8 @@ var showFatal = showState.show;
 var scalarData = [];
 var scalarID = 0;
 
-
+// ==== session stuff ====
+var sessionID = 0;
 
 
 function nextShowState(state) {
@@ -74,9 +75,7 @@ function connect() {
 		document.getElementById("server_url").disabled = true;
 		state = connectionState.connected;
 		
-		d3.select('#log').append('div')
-			.attr('class', 'sessionMarker')
-			.text('new session started...')
+		newSessionStarted();
 	};
 	
 	ws.onerror = function(e) {
@@ -105,18 +104,21 @@ function connect() {
 			
 			if (entry) { // scalar is already known
 				entry.value = scalar.value;
-				d3.select('#scalar-' + entry.id + ' div.value')
+				
+				var sessionDiv = d3.select('#scalar-session-' + sessionID);
+				
+				sessionDiv.select('#scalar-' + entry.id + ' div.value')
 					.text(round(scalar.value, 2))
 				
 				if (scalar.value < entry.min) {
 					entry.min = scalar.value;
-					d3.select('#scalar-' + entry.id + ' span.minValue')
+					sessionDiv.select('#scalar-' + entry.id + ' span.minValue')
 						.text(round(entry.min, 2))
 				}
 				
 				if (scalar.value > entry.max) {
 					entry.max = scalar.value
-					d3.select('#scalar-' + entry.id + ' span.maxValue')
+					sessionDiv.select('#scalar-' + entry.id + ' span.maxValue')
 						.text(round(entry.max, 2))
 				}
 			}
@@ -129,7 +131,7 @@ function connect() {
 					highlighted: false
 				};
 				
-				var tile = d3.select('#scalar').append('div')
+				var tile = d3.select('#scalar-session-' + sessionID).append('div')
 					.attr('class', 'tile')
 					.attr('id', 'scalar-' + entry.id)
 				tile.append('div')
@@ -181,7 +183,20 @@ function connect() {
 	};
 }
 
-
+function newSessionStarted() {
+	sessionID++;
+	d3.select('#log').append('div')
+		.attr('class', 'sessionMarker')
+		.text('new session started...');
+	
+	d3.select('#scalar').append('div')
+		.attr('class', 'sessionMarker')
+		.text('new session started...')
+	d3.select('#scalar').append('div')
+		.attr('id', 'scalar-session-' + sessionID)
+		
+	scalarData = [];
+}
 
 function addLog(datum) {
 	logData.push(datum);

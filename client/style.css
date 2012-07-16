@@ -94,12 +94,15 @@ div.log div {
 	padding: 2px 3px 2px 3px;
 }
 
-div.log div.sessionMarker {
+/* FIXME: div.sessionMarker not enough for the log section??? */
+div.sessionMarker, #log div.sessionMarker {
 	background-color: #3B5F93;
 	text-align: center;
 	border-radius: 1em;
 	color: #D1D1D1;
+	clear: both;
 }
+
 
 div.trace { color: #C5DDEA; }
 div.debug { color: #A6D0E8; }
@@ -193,15 +196,20 @@ div.tile:nth-child(3n) {
 	margin-right: 0px;
 }
 
+/* FIXME: dirty hack to add space between tiles and session marker*/
+div.tile:last-child {
+	margin-bottom: 5px;
+}
+
 div.tile div.name {
 	color: #88BEE2;
 }
 
 div.tile div.value {
-	line-height: 80x;
-/*	margin-bottom: -10px;*/
+	line-height: 95px;
+	margin-bottom: -20px;
 	text-align: center;
-	font-size: 4em;
+	font-size: 3em;
 	font-weight: 700;
 }
 
