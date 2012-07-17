@@ -34,6 +34,16 @@ var scalarID = 0;
 // ==== Time Series Data ====
 var timeSeriesData = [];
 var plotID = 0;
+var dim = {
+	width: 444,
+	height: 148,
+	left: 35,
+	top: 10,
+	bottom: 17,
+}
+dim.innerHeight = dim.height - (dim.top + dim.bottom);
+dim.innerWidth = dim.width - dim.left;
+
 
 // ==== session stuff ====
 var sessionID = 0;
@@ -313,7 +323,7 @@ function connect() {
 				entry.svg.append('g').attr('class', 'xAxis');
 				entry.svg.append('g').attr('class', 'yAxis');
 				entry.svg.append('g').attr('class', 'data')
-					.attr('transform', 'translate(30, 10)');
+					.attr('transform', 'translate(' + dim.left + ',' + dim.top + ')');
 					
 				addData(pl.name, pl.value, pl.reference);
 			}
@@ -353,35 +363,33 @@ function updatePlot(name) {
 	var entry = timeSeriesData[name];
 	var x = d3.scale.linear()
 		.domain([entry.data[0].x, last(entry.data).x])
-		.range([0, 443-31]);
+		.range([0, dim.innerWidth - 2]);
 	
 	var y = d3.scale.linear()
 		.domain([entry.min, entry.max])
-		.range([148-27, 0])
+		.range([dim.innerHeight, 0])
 		
 	var xAxis = d3.svg.axis()
 		.scale(x)
 		.ticks(5)
 		.tickSubdivide(3)
-		.tickSize((148 - 27) + 6, (148 - 27), (148 - 27) + 6)
+		.tickSize(dim.innerHeight + 6, dim.innerHeight, dim.innerHeight + 6)
 		.orient('bottom');
 	
 	var yAxis = d3.svg.axis()
 		.scale(y)
 		.ticks(5)
-		.tickSize((444-33) + 6, (444-33), (444-33) + 6)
+		.tickSize(dim.innerWidth + 3, dim.innerWidth - 3, dim.innerWidth + 3)
 		.tickSubdivide(1)
 		.orient('left');
 
 	entry.svg.select('g.xAxis')
-		.attr('transform', 'translate(30, 10)')
+		.attr('transform', 'translate(' + dim.left + ', ' + dim.top + ')')
 		.call(xAxis);
 	entry.svg.select('g.yAxis')
-		.attr('transform', 'translate(442, 10)')
+		.attr('transform', 'translate(' + (dim.width - 2) + ', ' + dim.top + ')')
 		.call(yAxis);
 
-	
-		
 	
 	var path = entry.svg.select('g.data').selectAll('path')
 		.data([entry.data]);
