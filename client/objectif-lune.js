@@ -309,12 +309,10 @@ function connect() {
 				entry.svg = div.append('svg')
 					.attr('width', 444)
 					.attr('height', 148)
-				
-				entry.svg.append('g')
-					.attr('class', 'data');
-				
-				entry.svg.append('g')
-					.attr('class', 'axis');
+							
+				entry.svg.append('g').attr('class', 'axisX');
+				entry.svg.append('g').attr('class', 'axisY');
+				entry.svg.append('g').attr('class', 'data');
 					
 				addData(pl.name, pl.value, pl.reference);
 			}
@@ -363,10 +361,25 @@ function updatePlot(name) {
 	var axisX = d3.svg.axis()
 		.scale(x)
 		.ticks(5)
-		.tickSubdivide(2)
-		.tickSize(100, 50)
+		.tickSubdivide(true)
+		.tickSize(6, 3, 6)
+		.orient('bottom');
 	
-	entry.svg.select('g.axis').call(axisX);
+	var axisY = d3.svg.axis()
+		.scale(y)
+		.ticks(5)
+		.tickSize(6, 3, 6)
+		.tickSubdivide(true)
+		.orient('left');
+
+	entry.svg.select('g.axisX')
+		.attr('transform', 'translate(50, 50)')
+		.call(axisX);
+	entry.svg.select('g.axisY')
+		.attr('transform', 'translate(40, 40)')
+		.call(axisY);
+
+	
 		
 	
 	var path = entry.svg.select('g.data').selectAll('path')

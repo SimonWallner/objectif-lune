@@ -1,312 +1,274 @@
-/*
- * colours:
- * white 1: #E8E8E8
- * white 2: #DBDBDB
- * white 3: #D1D1D1
- * dark:	#333
- * dark 2:	#3F3F3F
- * 
- * trace:   #C5DDEA
- * debug:	#A6D0E8
- * info:	#88BEE2
- * warn:	#D8C53D
- * error:	#D8782A
- * fatal: #B72C2C
- *
- * blue:	#3B5F93
- */
-
+/* colours:*/
 body {
-	background-color: #333;
-	font-size: 13px;
-	font-family: 'Bitter';
-	font-weight: 400;
-	color: #E8E8E8;
-}
+  background-color: #333;
+  font-size: 13px;
+  font-family: 'Bitter';
+  font-weight: 400;
+  color: #E8E8E8; }
 
 div.container {
-	width: 460px;
-	margin-left: 50px;
-/*	margin: 0px auto 0px auto;*/
-}
+  width: 460px;
+  margin-left: 50px;
+  /*	margin: 0px auto 0px auto;*/ }
 
 h1, h2 {
-	font-size: 3.5em;
-	font-weight: 700;
-	margin-top: 0.5em;
-	margin-bottom: 0.2em;
-	color: #E8E8E8;
-}
+  font-size: 3.5em;
+  font-weight: 700;
+  margin-top: 0.5em;
+  margin-bottom: 0.2em;
+  color: #E8E8E8; }
 
 h2 {
-	margin-top: 70px;
-}
-
+  margin-top: 70px; }
 
 p {
-	color: #E8E8E8;
-	margin-top: 1em;
-}
-hr {
-	height: 0.5em;
-	background-color: #E8E8E8;
-}
+  color: #E8E8E8;
+  margin-top: 1em; }
 
-svg {
-	background-color: #fff;
-}
+hr {
+  height: 0.5em;
+  background-color: #E8E8E8; }
 
 div.notice-area {
-	width: 300px;
-	position: fixed;
-	top: 10px;
-	left:50%;
-	margin-left: -150px;
-	color: #fff;
-	text-align: center;
-	vertical-align: center;
-	font-family: 'Open Sans';
-	font-weight: 700;
-}
+  width: 300px;
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  margin-left: -150px;
+  color: #fff;
+  text-align: center;
+  vertical-align: center;
+  font-family: 'Open Sans';
+  font-weight: 700; }
 
 div.notice-area div {
-	border-radius: 10px;
-	padding: 10px;
-	margin: 3px;
-}
+  border-radius: 10px;
+  padding: 10px;
+  margin: 3px; }
 
 div.notice-area div.notice {
-	background-color: #88BEE2;
-}
+  background-color: #88BEE2; }
 
 div.notice-area div.warning {
-	background-color: #D8C53D;
-}
+  background-color: #D8C53D; }
 
 div.log {
-	margin-top: 1em;
-	font-weight: 400;
-}
+  margin-top: 1em;
+  font-weight: 400; }
+
 div.log div {
-	margin-top: 2px;
-	background-color: #3F3F3F;
-	border-radius: 2px;
-	padding: 2px 3px 2px 3px;
-}
+  margin-top: 2px;
+  background-color: #3F3F3F;
+  border-radius: 2px;
+  padding: 2px 3px 2px 3px; }
 
 /* FIXME: div.sessionMarker not enough for the log section??? */
 div.sessionMarker, #log div.sessionMarker {
-	background-color: #3B5F93;
-	text-align: center;
-	border-radius: 1em;
-	color: #D1D1D1;
-	clear: both;
-}
+  background-color: #3B5F93;
+  text-align: center;
+  border-radius: 1em;
+  color: #D1D1D1;
+  clear: both; }
 
+div.trace {
+  color: #C5DDEA; }
 
-div.trace { color: #C5DDEA; }
-div.debug { color: #A6D0E8; }
-div.info { color: #88BEE2; }
-div.warn { color: #D8C53D; }
-div.error { color: #D8782A; }
-div.fatal { color: #B72C2C; }
+div.debug {
+  color: #A6D0E8; }
 
-.trace-back { background-color: #C5DDEA; }
-.debug-back { background-color: #A6D0E8; }
-.info-back { background-color: #88BEE2; }
-.warn-back { background-color: #D8C53D; }
-.error-back { background-color: #D8782A; }
-.fatal-back { background-color: #B72C2C; }
+div.info {
+  color: #88BEE2; }
 
-.trace-border { border-color: #C5DDEA; }
-.debug-border { border-color: #A6D0E8; }
-.info-border { border-color: #88BEE2; }
-.warn-border { border-color: #D8C53D; }
-.error-border { border-color: #D8782A; }
-.fatal-border { border-color: #B72C2C; }
+div.warn {
+  color: #D8C53D; }
+
+div.error {
+  color: #D8782A; }
+
+div.fatal {
+  color: #B72C2C; }
+
+.trace-back {
+  background-color: #C5DDEA; }
+
+.debug-back {
+  background-color: #A6D0E8; }
+
+.info-back {
+  background-color: #88BEE2; }
+
+.warn-back {
+  background-color: #D8C53D; }
+
+.error-back {
+  background-color: #D8782A; }
+
+.fatal-back {
+  background-color: #B72C2C; }
+
+.trace-border {
+  border-color: #C5DDEA; }
+
+.debug-border {
+  border-color: #A6D0E8; }
+
+.info-border {
+  border-color: #88BEE2; }
+
+.warn-border {
+  border-color: #D8C53D; }
+
+.error-border {
+  border-color: #D8782A; }
+
+.fatal-border {
+  border-color: #B72C2C; }
 
 div.cube {
-	width: 65px;
-	height: 65px;
-	border-radius: 14px;
-	margin-right: 14px;
-	float: left;
-}
+  width: 65px;
+  height: 65px;
+  border-radius: 14px;
+  margin-right: 14px;
+  float: left; }
 
 div.cube:last-child {
-	margin-right: 0px;
-}
+  margin-right: 0px; }
 
 #clearLog, #clearScalar {
-	background-color: #B72C2C;
-	float: right;
-}
+  background-color: #B72C2C;
+  float: right; }
 
 .rounded-inline {
-	border-radius: 1em;
-	padding: 3px 7px 3px 7px;
-}
+  border-radius: 1em;
+  padding: 3px 7px 3px 7px; }
 
 span.lines {
-	background-color: #D1D1D1;
-	color: #333;
-}
+  background-color: #D1D1D1;
+  color: #333; }
 
 #lineCounter {
-	background-color: #E8E8E8;
-	margin-left: -7px;
-	padding
-}
+  background-color: #E8E8E8;
+  margin-left: -7px; }
 
 input {
-	background-color: #3F3F3F;
-	color: #E8E8E8;
-	border: none;
-	font-family: 'Bitter';
-	font-weight: 700;
-	width: auto;
-}
+  background-color: #3F3F3F;
+  color: #E8E8E8;
+  border: none;
+  font-family: 'Bitter';
+  font-weight: 700;
+  width: auto; }
 
 button {
-	background-color: #B72C2C;
-	border-radius: 1em;
-	border: none;
-	font-family: 'Bitter';
-	color: #D1D1D1;
-}
+  background-color: #B72C2C;
+  border-radius: 1em;
+  border: none;
+  font-family: 'Bitter';
+  color: #D1D1D1; }
 
 div.scalar {
-	margin-top: 0.5em;
-	margin-bottom: 1em;
-}
+  margin-top: 0.5em;
+  margin-bottom: 1em; }
 
 div.tile {
-	width: 134px;
-	height: 134px;
-	margin-right: 5px;
-	margin-top: 5px;
-	background-color: #3F3F3F;
-	float: left;
-	border-radius: 0.5em;
-	padding: 8px;
-	overflow: hidden;
-}
+  width: 134px;
+  height: 134px;
+  margin-right: 5px;
+  margin-top: 5px;
+  background-color: #3F3F3F;
+  float: left;
+  border-radius: 0.5em;
+  padding: 8px;
+  overflow: hidden; }
 
 div.tile:nth-child(3n) {
-	margin-right: 0px;
-}
+  margin-right: 0px; }
 
 /* FIXME: dirty hack to add space between tiles and session marker*/
 div.tile:last-child {
-	margin-bottom: 5px;
-}
+  margin-bottom: 5px; }
 
 div.tile div.name, div.data span.name {
-	color: #88BEE2;
-}
+  color: #88BEE2; }
 
 div.tile div.value {
-	line-height: 95px;
-	margin-bottom: -20px;
-	text-align: center;
-	font-size: 3em;
-	font-weight: 700;
-}
+  line-height: 95px;
+  margin-bottom: -20px;
+  text-align: center;
+  font-size: 3em;
+  font-weight: 700; }
 
 div.tile hr {
-	height: 3px;
-}
+  height: 3px; }
 
 div.tile div.minMax {
-	margin-top: 6px;
-	float: left;
-	width: 67px;
-	overflow: hidden;
-}
+  margin-top: 6px;
+  float: left;
+  width: 67px;
+  overflow: hidden; }
 
 div.tile div.minMax span.label {
-	font-size: .8em;
-	color: #D1D1D1;
-}
+  font-size: .8em;
+  color: #D1D1D1; }
 
 div.tile span.minValue, div.tile span.maxValue {
-	font-size: 1.3em;
-}
+  font-size: 1.3em; }
 
 div.highlighted {
-	background-color: #3B5F93;
-}
-
+  background-color: #3B5F93; }
 
 /* time series data */
 div.plot {
-	width: 444px;
-/*	height: 134px;*/
-	margin-top: 5px;
-	background-color: #3F3F3F;
-	border-radius: 0.5em;
-	padding: 8px;
-	overflow: hidden;
-}
+  width: 444px;
+  /*	height: 134px;*/
+  margin-top: 5px;
+  background-color: #3F3F3F;
+  border-radius: 0.5em;
+  padding: 8px;
+  overflow: hidden; }
 
 div.plot svg {
-	margin-top: 0.5em;
-	/* somehow there is too much space beneath the svg */
-	margin-bottom: -3px; 
-	clear: both;
-}
-
-svg {
-	background-color: transparent;
-}
+  margin-top: 0.5em;
+  /* somehow there is too much space beneath the svg */
+  margin-bottom: -3px;
+  clear: both; }
 
 span.right {
-	float: right;
-}
+  float: right; }
+
 span.updateInterval, span.bufferLength {
-	border-radius: 1em;
-	padding: 3px 7px 3px 7px;
-	background-color: #333;
-}
+  border-radius: 1em;
+  padding: 3px 7px 3px 7px;
+  background-color: #333; }
 
 span.bufferLength {
-	margin-right: 1em;
-}
+  margin-right: 1em; }
 
 span.updateInterval span, span.bufferLength span {
-	background-color: #333;
-	border-radius: 1em;
-	padding: 3px 7px 3px 7px;
-	color: #E8E8E8;
-}
+  background-color: #333;
+  border-radius: 1em;
+  padding: 3px 7px 3px 7px;
+  color: #E8E8E8; }
 
 span.updateInterval span.active, span.bufferLength span.active {
-	background-color: #E8E8E8;
-	color: #333;
-}
+  background-color: #E8E8E8;
+  color: #333; }
 
 span.updateInterval span:first-child, span.bufferLength span:first-child {
-	margin-left: -7px;
-}
+  margin-left: -7px; }
 
 span.updateInterval span:last-child, span.bufferLength span:last-child {
-	margin-right: -7px;
-}
+  margin-right: -7px; }
 
 /* =========================== SVG styles ============================== */
-
-
 path {
-	fill: none;
- 	stroke: #D8C53D;
-	stroke-width: 2px;
-}
+  fill: none;
+  stroke: #d8c53d;
+  stroke-width: 2px; }
 
-g.axis path {
-	stroke: #D1D1D1;
-	stroke-width: 1px;
-}
+g.axisX path, g.axisY path {
+  stroke: #d1d1d1;
+  stroke-width: 1px;
+  shape-rendering: crispEdges; }
 
-g.axis text {
-	fill: #D1D1D1;
-}
+g.axisX text, g.axisY text {
+  fill: #d1d1d1; }
