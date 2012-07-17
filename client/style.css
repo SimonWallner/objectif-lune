@@ -260,29 +260,36 @@ svg {
 	background-color: transparent;
 }
 
-span.updateInterval {
+span.right {
+	float: right;
+}
+span.updateInterval, span.bufferLength {
 	border-radius: 1em;
 	padding: 3px 7px 3px 7px;
 	background-color: #333;
-	float: right;
 }
-span.updateInterval span {
+
+span.bufferLength {
+	margin-right: 1em;
+}
+
+span.updateInterval span, span.bufferLength span {
 	background-color: #333;
 	border-radius: 1em;
 	padding: 3px 7px 3px 7px;
 	color: #E8E8E8;
 }
 
-span.updateInterval span.active {
+span.updateInterval span.active, span.bufferLength span.active {
 	background-color: #E8E8E8;
 	color: #333;
 }
 
-span.updateInterval span:first-child {
+span.updateInterval span:first-child, span.bufferLength span:first-child {
 	margin-left: -7px;
 }
 
-span.updateInterval span:last-child {
+span.updateInterval span:last-child, span.bufferLength span:last-child {
 	margin-right: -7px;
 }
 

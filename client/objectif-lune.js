@@ -197,6 +197,7 @@ function connect() {
 					id: plotID++,
 					min: pl.value,
 					max: pl.value,
+					bufferLength: 250
 				}
 				
 				var div = d3.select('#data').append('div')
@@ -206,8 +207,60 @@ function connect() {
 				div.append('span')
 					.attr('class', 'name')
 					.text(pl.name);
+				
+				// buttons span
+				var buttonsSpan = div.append('span')
+					.attr('class', 'right')
 					
-				var updateIntervalSpan = div.append('span')
+				// buffer length spans
+				var bufferLengthSpan = buttonsSpan.append('span')
+					.attr('class', 'bufferLength')
+					
+				bufferLengthSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-10')
+					.text('10');
+				$('#plot-' + entry.id + '-10').click(function() {
+					bufferSetSpanActive(entry.id, '10')
+					entry.bufferLength = 10;
+				})
+				
+				bufferLengthSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-50')
+					.text('50');
+				$('#plot-' + entry.id + '-50').click(function() {
+					bufferSetSpanActive(entry.id, '50')
+					entry.bufferLength = 50;
+				})
+
+				bufferLengthSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-100')
+					.text('100');
+				$('#plot-' + entry.id + '-100').click(function() {
+					bufferSetSpanActive(entry.id, '100')
+					entry.bufferLength = 100;
+				})
+				
+				bufferLengthSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-250')
+					.text('250')
+					.attr('class', 'active');
+				$('#plot-' + entry.id + '-250').click(function() {
+					bufferSetSpanActive(entry.id, '250')
+					entry.bufferLength = 250;
+				})
+				
+				bufferLengthSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-500')
+					.text('500');
+				$('#plot-' + entry.id + '-500').click(function() {
+					bufferSetSpanActive(entry.id, '500')
+					entry.bufferLength = 500;
+				})
+				
+				
+				
+				// update interval spans
+				var updateIntervalSpan = buttonsSpan.append('span')
 					.attr('class', 'updateInterval');
 					
 				updateIntervalSpan.append('span')
@@ -270,6 +323,12 @@ function updateSetSpanActive(id, button) {
 		.attr('class', 'active');
 }
 
+function bufferSetSpanActive(id, button) {
+	d3.selectAll('#plot-' + id + ' span.bufferLength span')
+		.attr('class', '');
+	d3.select('#plot-' + id + '-' + button)
+		.attr('class', 'active');
+}
 function addData(name, datum, reference) {
 	var entry = timeSeriesData[name];
 	
@@ -280,8 +339,8 @@ function addData(name, datum, reference) {
 	if (datum > entry.max)
 		entry.max = datum;
 		
-	if (entry.data.length > 500)
-		entry.data.splice(0, entry.data.length - 500);
+	if (entry.data.length > entry.bufferLength)
+		entry.data.splice(0, entry.data.length - entry.bufferLength);
 }
 
 function updatePlot(name) {
