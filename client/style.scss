@@ -4,12 +4,16 @@ $white2: #DBDBDB;
 $white3: #D1D1D1;
 $dark: #333;
 $dark2: #3F3F3F;
+
 $blue1: #C5DDEA;
 $blue2:	#A6D0E8;
 $blue3: #88BEE2;
 $yellow: #D8C53D;
 $orange: #D8782A;
 $red: #B72C2C;
+
+$blue: #3B5F93;
+$grey: #666;
 
 $trace: $blue1;
 $debug:	$blue2;
@@ -18,7 +22,7 @@ $warn: $yellow;
 $error: $orange;
 $fatal: $red;
 
-$blue:	#3B5F93;
+
  
 
 body {
@@ -251,8 +255,7 @@ div.plot {
 
 div.plot svg {
 	margin-top: 0.5em;
-	/* somehow there is too much space beneath the svg */
-	margin-bottom: -3px; 
+	margin-bottom: -5px; 
 	clear: both;
 }
 
@@ -299,16 +302,22 @@ path {
 	stroke-width: 2px;
 }
 
-g.axisX, g.axisY { 
+g.xAxis, g.yAxis { 
 	path {
-		stroke: $white3;
+		stroke: $grey;
 		stroke-width: 1px;
 		shape-rendering: crispEdges;
 	}
 }
 
-g.axisX, g.axisY {
+g.xAxis, g.yAxis {
 	text {
 		fill: $white3;
+		font-size: 0.8em;
 	}
+}
+
+line {
+	stroke: $grey;
+	shape-rendering: crispEdges;
 }

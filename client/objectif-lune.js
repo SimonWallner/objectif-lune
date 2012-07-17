@@ -310,9 +310,10 @@ function connect() {
 					.attr('width', 444)
 					.attr('height', 148)
 							
-				entry.svg.append('g').attr('class', 'axisX');
-				entry.svg.append('g').attr('class', 'axisY');
-				entry.svg.append('g').attr('class', 'data');
+				entry.svg.append('g').attr('class', 'xAxis');
+				entry.svg.append('g').attr('class', 'yAxis');
+				entry.svg.append('g').attr('class', 'data')
+					.attr('transform', 'translate(30, 10)');
 					
 				addData(pl.name, pl.value, pl.reference);
 			}
@@ -352,32 +353,32 @@ function updatePlot(name) {
 	var entry = timeSeriesData[name];
 	var x = d3.scale.linear()
 		.domain([entry.data[0].x, last(entry.data).x])
-		.range([0, 444]);
+		.range([0, 443-31]);
 	
 	var y = d3.scale.linear()
 		.domain([entry.min, entry.max])
-		.range([148, 0])
+		.range([148-27, 0])
 		
-	var axisX = d3.svg.axis()
+	var xAxis = d3.svg.axis()
 		.scale(x)
 		.ticks(5)
-		.tickSubdivide(true)
-		.tickSize(6, 3, 6)
+		.tickSubdivide(3)
+		.tickSize((148 - 27) + 6, (148 - 27), (148 - 27) + 6)
 		.orient('bottom');
 	
-	var axisY = d3.svg.axis()
+	var yAxis = d3.svg.axis()
 		.scale(y)
 		.ticks(5)
-		.tickSize(6, 3, 6)
-		.tickSubdivide(true)
+		.tickSize((444-33) + 6, (444-33), (444-33) + 6)
+		.tickSubdivide(1)
 		.orient('left');
 
-	entry.svg.select('g.axisX')
-		.attr('transform', 'translate(50, 50)')
-		.call(axisX);
-	entry.svg.select('g.axisY')
-		.attr('transform', 'translate(40, 40)')
-		.call(axisY);
+	entry.svg.select('g.xAxis')
+		.attr('transform', 'translate(30, 10)')
+		.call(xAxis);
+	entry.svg.select('g.yAxis')
+		.attr('transform', 'translate(442, 10)')
+		.call(yAxis);
 
 	
 		

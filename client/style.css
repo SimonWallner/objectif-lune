@@ -228,8 +228,7 @@ div.plot {
 
 div.plot svg {
   margin-top: 0.5em;
-  /* somehow there is too much space beneath the svg */
-  margin-bottom: -3px;
+  margin-bottom: -5px;
   clear: both; }
 
 span.right {
@@ -265,10 +264,15 @@ path {
   stroke: #d8c53d;
   stroke-width: 2px; }
 
-g.axisX path, g.axisY path {
-  stroke: #d1d1d1;
+g.xAxis path, g.yAxis path {
+  stroke: #666666;
   stroke-width: 1px;
   shape-rendering: crispEdges; }
 
-g.axisX text, g.axisY text {
-  fill: #d1d1d1; }
+g.xAxis text, g.yAxis text {
+  fill: #d1d1d1;
+  font-size: 0.8em; }
+
+line {
+  stroke: #666666;
+  shape-rendering: crispEdges; }

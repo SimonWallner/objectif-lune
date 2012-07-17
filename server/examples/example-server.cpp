@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 //		server->info("Uh, everything's under control. Situation normal.");
 		
 		server->data(frameCounter, "frame time", (float)(rand() % 99999) / 100.0f);
-		server->data((float)frameCounter/1000.0f, "acceleration", sin(frameCounter / 100.0f));
+		server->data(frameCounter, "acceleration", sin(frameCounter / 100.0f));
 		boost::this_thread::sleep(boost::posix_time::milliseconds(delay));
 
 		frameCounter++;
