@@ -301,3 +301,12 @@ path {
  	stroke: #D8C53D;
 	stroke-width: 2px;
 }
+
+g.axis path {
+	stroke: #D1D1D1;
+	stroke-width: 1px;
+}
+
+g.axis text {
+	fill: #D1D1D1;
+}
