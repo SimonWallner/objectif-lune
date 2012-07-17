@@ -179,24 +179,24 @@ function connect() {
 					else {
 						d3.select('#scalar-' + entry.id)
 							.attr('class', 'tile')
-					}
-							
+					}			
 				})
 			}
 		}
 		else if (data.type == 'data') {
 			var pl = data.payload
-			entry = timeSeriesData[pl.name];
+			var entry = timeSeriesData[pl.name];
 			
 			if (entry) // plot already exists
 			{
-				updatePlot(pl.name, pl.value, pl.reference);
+				addData(pl.name, pl.value, pl.reference);
 			} else {
-				entry = timeSeriesData[data.payload.name] = {
+				entry = timeSeriesData[pl.name] = {
+					name: pl.name,
 					data: [],
 					id: plotID++,
 					min: pl.value,
-					max: pl.value
+					max: pl.value,
 				}
 				
 				var div = d3.select('#data').append('div')
@@ -206,32 +206,87 @@ function connect() {
 				div.append('span')
 					.attr('class', 'name')
 					.text(pl.name);
+					
+				var updateIntervalSpan = div.append('span')
+					.attr('class', 'updateInterval');
+					
+				updateIntervalSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-live')
+					.text('live');
+				$('#plot-' + entry.id + '-live').click(function() {
+					updateSetSpanActive(entry.id, 'live')
+					entry.updateCallbackHandle && clearInterval(entry.updateCallbackHandle);
+					entry.updateCallbackHandle = setInterval(function() {
+						updatePlot(entry.name);
+					}, 30);
+				})
+
+				updateIntervalSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-1s')
+					.text('1s')
+				$('#plot-' + entry.id + '-1s').click(function() {
+					updateSetSpanActive(entry.id, '1s')
+					entry.updateCallbackHandle && clearInterval(entry.updateCallbackHandle);
+					entry.updateCallbackHandle = setInterval(function() {
+						updatePlot(entry.name);
+					}, 1000);
+				})
 				
+				updateIntervalSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-5s')
+					.text('5s')
+				$('#plot-' + entry.id + '-5s').click(function() {
+					updateSetSpanActive(entry.id, '5s')
+					entry.updateCallbackHandle && clearInterval(entry.updateCallbackHandle);
+					entry.updateCallbackHandle = setInterval(function() {
+						updatePlot(entry.name);
+
+					}, 5000);
+				})
+				
+				updateIntervalSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-off')
+					.attr('class', 'active')
+					.text('off')
+				$('#plot-' + entry.id + '-off').click(function() {
+					entry.updateCallbackHandle && clearInterval(entry.updateCallbackHandle);
+					updateSetSpanActive(entry.id, 'off')
+				})
+								
 				entry.svg = div.append('svg')
 					.attr('width', 444)
 					.attr('height', 148)
 					
-				updatePlot(pl.name, pl.value, pl.reference);
+				addData(pl.name, pl.value, pl.reference);
 			}
 		}
 	};
 }
 
-function updatePlot(name, datum, reference) {
-	entry = timeSeriesData[name];
+function updateSetSpanActive(id, button) {
+	d3.selectAll('#plot-' + id + ' span.updateInterval span')
+		.attr('class', '');
+	d3.select('#plot-' + id + '-' + button)
+		.attr('class', 'active');
+}
+
+function addData(name, datum, reference) {
+	var entry = timeSeriesData[name];
+	
 	entry.data.push({x: reference, y: datum});
+	
 	if (datum < entry.min)
 		entry.min = datum;
 	if (datum > entry.max)
 		entry.max = datum;
 		
 	if (entry.data.length > 500)
-		entry.data.splice(0, 1);
+		entry.data.splice(0, entry.data.length - 500);
+}
 
-
-	var minX = entry.data[0].x;
-	var maxX = last(entry.data).x;
+function updatePlot(name) {
 	
+	var entry = timeSeriesData[name];
 	var x = d3.scale.linear()
 		.domain([entry.data[0].x, last(entry.data).x])
 		.range([0, 444]);
@@ -256,7 +311,6 @@ function updatePlot(name, datum, reference) {
 	path.transition()
 		.duration(0)
 		.call(drawPath)
-	
 }
 
 function newSessionStarted() {
