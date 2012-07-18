@@ -19,7 +19,7 @@ h1, h2 {
   color: #E8E8E8; }
 
 h2 {
-  margin-top: 70px; }
+  margin-top: 1em; }
 
 p {
   color: #E8E8E8;
@@ -51,6 +51,39 @@ div.notice-area div.notice {
 
 div.notice-area div.warning {
   background-color: #D8C53D; }
+
+span.connection {
+  background-color: #3f3f3f; }
+
+span.connection span.active {
+  background-color: #e8e8e8;
+  color: #333333; }
+
+#autoConnect {
+  border-radius: 1em;
+  padding: 3px 7px 3px 7px;
+  margin-left: -7px; }
+
+#disconnect {
+  border-radius: 1em;
+  padding: 3px 7px 3px 7px;
+  margin-right: -7px; }
+
+#connectionStatus {
+  text-align: center;
+  /*	line-height: 3em;*/
+  border-radius: 1em;
+  font-family: 'Open Sans';
+  font-weight: 700; }
+
+#connectionStatus.connected {
+  background-color: #38843f; }
+
+#connectionStatus.connecting {
+  background-color: #d8c53d; }
+
+#connectionStatus.disconnected {
+  background-color: #b72c2c; }
 
 div.log {
   margin-top: 1em;
@@ -159,7 +192,7 @@ input {
   border: none;
   font-family: 'Bitter';
   font-weight: 700;
-  width: auto; }
+  width: 300px; }
 
 button {
   background-color: #B72C2C;
@@ -171,6 +204,9 @@ button {
 div.scalar {
   margin-top: 0.5em;
   margin-bottom: 1em; }
+
+div.data {
+  margin-top: 1em; }
 
 div.tile {
   width: 134px;

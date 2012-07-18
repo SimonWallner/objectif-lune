@@ -14,6 +14,7 @@ $red: #B72C2C;
 
 $blue: #3B5F93;
 $grey: #666;
+$green: #38843F;
 
 $trace: $blue1;
 $debug:	$blue2;
@@ -48,7 +49,7 @@ h1, h2 {
 }
 
 h2 {
-	margin-top: 70px;
+	margin-top: 1em;
 }
 
 
@@ -86,6 +87,43 @@ div.notice-area div.notice {
 
 div.notice-area div.warning {
 	background-color: #D8C53D;
+}
+
+span.connection {
+	background-color: $dark2;
+}
+span.connection span.active {
+	background-color: $white1;
+	color: $dark;
+}
+
+#autoConnect {
+	border-radius: 1em;
+	padding: 3px 7px 3px 7px;
+	margin-left: -7px;
+}
+
+#disconnect{
+	border-radius: 1em;
+	padding: 3px 7px 3px 7px;
+	margin-right: -7px;
+}
+
+#connectionStatus {
+	text-align: center;
+/*	line-height: 3em;*/
+	border-radius: 1em;
+	font-family: 'Open Sans';
+	font-weight: 700;
+}
+#connectionStatus.connected {
+	background-color: $green;
+}
+#connectionStatus.connecting {
+	background-color: $yellow;
+}
+#connectionStatus.disconnected {
+	background-color: $red;
 }
 
 div.log {
@@ -173,7 +211,7 @@ input {
 	border: none;
 	font-family: 'Bitter';
 	font-weight: 700;
-	width: auto;
+	width: 300px;
 }
 
 button {
@@ -187,6 +225,10 @@ button {
 div.scalar {
 	margin-top: 0.5em;
 	margin-bottom: 1em;
+}
+
+div.data {
+	margin-top: 1em;
 }
 
 div.tile {

@@ -6,6 +6,8 @@ var connectionState = {
 	connected: "connected"
 };
 
+var autoConnect = true;
+
 var dataArray = [];
 for (var i = 0; i < 100; i++) {
 	dataArray[i] = 0;
@@ -78,6 +80,7 @@ function connect() {
 		ws = new MozWebSocket(url);
 	} else {
 		alert('This Browser does not support WebSockets');
+		autoConnect = false;
 		return;
 	}
 
@@ -88,6 +91,9 @@ function connect() {
 		
 		document.getElementById("server_url").disabled = true;
 		state = connectionState.connected;
+		d3.select('#connectionStatus')
+			.text('connected')
+			.attr('class', 'connected')
 		
 		newSessionStarted();
 	};
@@ -95,6 +101,9 @@ function connect() {
 	ws.onerror = function(e) {
 		console.log(e);
 		state = connectionState.notConnected;
+		d3.select('#connectionStatus')
+			.text('disconnected')
+			.attr('class', 'disconnected')
 	};
 	
 	ws.onclose = function(e) {
@@ -349,7 +358,7 @@ function connect() {
 				buttonsDiv.append('div')
 					.attr('class', 'rounded-inline clearData')
 					.attr('id', 'clearData-' + entry.id)
-					.text('clear')
+					.text('clear!')
 				$('#clearData-' + entry.id).click(function() {
 					entry.data = [];
 					entry.min = Infinity;
@@ -556,13 +565,18 @@ function warn(msg) {
 function disconnect() {
 	ws.close();
 	document.getElementById("server_url").disabled = false;
-	document.getElementById("autoConnect").checked = false;
+	d3.select('#connectionStatus')
+		.text('disconnected')
+		.attr('class', 'disconnected')
 }
 
 
 function auto_connect() {
-	if (document.getElementById("autoConnect").checked === true) {
+	if (autoConnect === true) {
 		if (state === connectionState.notConnected) {
+			d3.select('#connectionStatus')
+				.attr('class', 'connecting')
+				.text('connecting...')
 			connect();
 		}
 	}
@@ -604,10 +618,26 @@ function toggleCube(state, name, cls) {
 }
 
 function init() {	
-	plotSVG = d3.select('#plot').append('svg')
-		.attr('width', 620)
-		.attr('height', 155)
-	plotGroup = plotSVG.append('g')
+	
+	$('#autoConnect').click(function() {
+		autoConnect = true;
+		d3.select('#autoConnect')
+			.attr('class', 'active')
+		d3.select('#disconnect')
+			.attr('class', '')
+	})
+	
+	$('#disconnect').click(function() {
+		autoConnect = false;
+		disconnect();
+		d3.select('#disconnect')
+			.attr('class', 'active')
+		d3.select('#autoConnect')
+			.attr('class', '')
+	})
+	
+	// connect when ready	
+	setInterval(auto_connect, 500);
 	
 	$('#toggleTrace').click(function() {
 		showTrace = nextShowState(showTrace);
@@ -658,9 +688,6 @@ function init() {
 		d3.select('#scalar').append('div')
 			.attr('id', 'scalar-session-' + sessionID)
 	})
-	
-	// connect when ready	
-	setInterval(auto_connect, 500);
 }
 
 
