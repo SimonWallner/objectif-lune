@@ -32,6 +32,8 @@ body {
 	font-family: 'Bitter';
 	font-weight: 400;
 	color: #E8E8E8;
+	/* come on iOS webkit, be a good citizen! */
+	-webkit-text-size-adjust: 100%;
 }
 
 div.container {
