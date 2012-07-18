@@ -38,7 +38,7 @@ var dim = {
 	width: 444,
 	height: 148,
 	left: 35,
-	top: 10,
+	top: 5,
 	bottom: 17,
 }
 dim.innerHeight = dim.height - (dim.top + dim.bottom);
@@ -207,40 +207,53 @@ function connect() {
 					id: plotID++,
 					min: pl.value,
 					max: pl.value,
-					bufferLength: 250
+					bufferLength: 250,
+					scale: 'lin'
 				}
 				
 				var div = d3.select('#data').append('div')
 					.attr('id', 'plot-' + entry.id)
 					.attr('class', 'plot');
 				
-				div.append('span')
+				div.append('div')
 					.attr('class', 'name')
 					.text(pl.name);
 				
-				// buttons span
-				var buttonsSpan = div.append('span')
-					.attr('class', 'right')
+				// buttons div
+				var buttonsDiv = div.append('div')
+					.attr('class', 'dataButtons')
 					
-				// buffer length spans
-				var bufferLengthSpan = buttonsSpan.append('span')
-					.attr('class', 'bufferLength')
+				// log/linear
+				var logLinSpan = buttonsDiv.append('span')
+					.attr('class', 'logLin')
+				
+				logLinSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-lin')
+					.attr('class', 'active')
+					.text('lin');
+				$('#plot-' + entry.id + '-lin').click(function() {
+					entry.scale = 'lin';
+					d3.select('#plot-' + entry.id + '-lin')
+						.attr('class', 'active');
+					d3.select('#plot-' + entry.id + '-log')
+						.attr('class', '');
+				})
 					
-				bufferLengthSpan.append('span')
-					.attr('id', 'plot-' + entry.id + '-10')
-					.text('10');
-				$('#plot-' + entry.id + '-10').click(function() {
-					bufferSetSpanActive(entry.id, '10')
-					entry.bufferLength = 10;
+				logLinSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-log')
+					.text('log');
+				$('#plot-' + entry.id + '-log').click(function() {
+					entry.scale = 'log';
+					d3.select('#plot-' + entry.id + '-log')
+						.attr('class', 'active');
+					d3.select('#plot-' + entry.id + '-lin')
+						.attr('class', '');
 				})
 				
-				bufferLengthSpan.append('span')
-					.attr('id', 'plot-' + entry.id + '-50')
-					.text('50');
-				$('#plot-' + entry.id + '-50').click(function() {
-					bufferSetSpanActive(entry.id, '50')
-					entry.bufferLength = 50;
-				})
+					
+				// buffer length spans
+				var bufferLengthSpan = buttonsDiv.append('span')
+					.attr('class', 'bufferLength')
 
 				bufferLengthSpan.append('span')
 					.attr('id', 'plot-' + entry.id + '-100')
@@ -267,10 +280,25 @@ function connect() {
 					entry.bufferLength = 500;
 				})
 				
+				bufferLengthSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-1k')
+					.text('1k');
+				$('#plot-' + entry.id + '-1k').click(function() {
+					bufferSetSpanActive(entry.id, '1k')
+					entry.bufferLength = 1000;
+				})
+				
+				bufferLengthSpan.append('span')
+					.attr('id', 'plot-' + entry.id + '-2-5k')
+					.text('2.5k');
+				$('#plot-' + entry.id + '-2-5k').click(function() {
+					bufferSetSpanActive(entry.id, '2-5k')
+					entry.bufferLength = 2500;
+				})
 				
 				
 				// update interval spans
-				var updateIntervalSpan = buttonsSpan.append('span')
+				var updateIntervalSpan = buttonsDiv.append('span')
 					.attr('class', 'updateInterval');
 					
 				updateIntervalSpan.append('span')
@@ -315,7 +343,23 @@ function connect() {
 					entry.updateCallbackHandle && clearInterval(entry.updateCallbackHandle);
 					updateSetSpanActive(entry.id, 'off')
 				})
-								
+				
+							
+				// clear button
+				buttonsDiv.append('div')
+					.attr('class', 'rounded-inline clearData')
+					.attr('id', 'clearData-' + entry.id)
+					.text('clear')
+				$('#clearData-' + entry.id).click(function() {
+					entry.data = [];
+					entry.min = Infinity;
+					entry.max = -Infinity;
+					// updatePlot(entry.name); // does not work, because the plot is not updated if there is no data.
+				})
+				div.append('div')	
+					.style('clear', 'both')
+				
+				// add the svg
 				entry.svg = div.append('svg')
 					.attr('width', 444)
 					.attr('height', 148)
@@ -324,7 +368,9 @@ function connect() {
 				entry.svg.append('g').attr('class', 'yAxis');
 				entry.svg.append('g').attr('class', 'data')
 					.attr('transform', 'translate(' + dim.left + ',' + dim.top + ')');
-					
+				
+								
+				// finally add the data.
 				addData(pl.name, pl.value, pl.reference);
 			}
 		}
@@ -361,13 +407,26 @@ function addData(name, datum, reference) {
 function updatePlot(name) {
 	
 	var entry = timeSeriesData[name];
-	var x = d3.scale.linear()
-		.domain([entry.data[0].x, last(entry.data).x])
-		.range([0, dim.innerWidth - 2]);
+	if (entry.data[0] === undefined)
+		return;
+		
+
+		var x = d3.scale.linear()
+			.domain([entry.data[0].x, last(entry.data).x])
+			.range([0, dim.innerWidth - 2]);
+
+	if (entry.scale === 'lin') {
+		var y = d3.scale.linear()
+			.domain([entry.min, entry.max])
+			.range([dim.innerHeight, 0])
+	} else {
+		var y = d3.scale.log()
+			.domain([Math.max(entry.min, 0.1), entry.max])
+			.range([dim.innerHeight, 0])
+	}
+
 	
-	var y = d3.scale.linear()
-		.domain([entry.min, entry.max])
-		.range([dim.innerHeight, 0])
+
 		
 	var xAxis = d3.svg.axis()
 		.scale(x)
@@ -394,11 +453,20 @@ function updatePlot(name) {
 	var path = entry.svg.select('g.data').selectAll('path')
 		.data([entry.data]);
 	
-	var drawPath = function(d) {
-		d.attr('d', d3.svg.line() 
-			.x(function(d) { return x(d.x); })
-			.y(function(d) { return y(d.y); })
-			.interpolate('linear'));
+	if (entry.scale === 'lin') {
+		var drawPath = function(d) {
+			d.attr('d', d3.svg.line() 
+				.x(function(d) { return x(d.x); })
+				.y(function(d) { return y(d.y); })
+				.interpolate('linear'));
+		}
+	} else {
+		var drawPath = function(d) {
+			d.attr('d', d3.svg.line() 
+				.x(function(d) { return x(d.x); })
+				.y(function(d) { return y(Math.max(d.y, 0.1)); })
+				.interpolate('linear'));
+		}
 	}
 	
 	path.enter().append('path')

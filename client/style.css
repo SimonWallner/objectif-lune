@@ -134,9 +134,12 @@ div.cube {
 div.cube:last-child {
   margin-right: 0px; }
 
-#clearLog, #clearScalar {
+#clearLog, #clearScalar, div.clearData {
   background-color: #B72C2C;
   float: right; }
+
+div.clearData {
+  margin-top: -3px; }
 
 .rounded-inline {
   border-radius: 1em;
@@ -187,7 +190,7 @@ div.tile:nth-child(3n) {
 div.tile:last-child {
   margin-bottom: 5px; }
 
-div.tile div.name, div.data span.name {
+div.tile div.name, div.data div.name {
   color: #88BEE2; }
 
 div.tile div.value {
@@ -234,29 +237,26 @@ div.plot svg {
 span.right {
   float: right; }
 
-span.updateInterval, span.bufferLength {
+span.updateInterval, span.bufferLength, span.logLin {
   border-radius: 1em;
   padding: 3px 7px 3px 7px;
-  background-color: #333; }
-
-span.bufferLength {
-  margin-right: 1em; }
-
-span.updateInterval span, span.bufferLength span {
   background-color: #333;
-  border-radius: 1em;
-  padding: 3px 7px 3px 7px;
-  color: #E8E8E8; }
+  margin-right: 0.5em; }
+  span.updateInterval span, span.bufferLength span, span.logLin span {
+    background-color: #333;
+    border-radius: 1em;
+    padding: 3px 7px 3px 7px;
+    color: #E8E8E8; }
+  span.updateInterval span.active, span.bufferLength span.active, span.logLin span.active {
+    background-color: #E8E8E8;
+    color: #333; }
+  span.updateInterval :first-child, span.bufferLength :first-child, span.logLin :first-child {
+    margin-left: -7px; }
+  span.updateInterval :last-child, span.bufferLength :last-child, span.logLin :last-child {
+    margin-right: -7px; }
 
-span.updateInterval span.active, span.bufferLength span.active {
-  background-color: #E8E8E8;
-  color: #333; }
-
-span.updateInterval span:first-child, span.bufferLength span:first-child {
-  margin-left: -7px; }
-
-span.updateInterval span:last-child, span.bufferLength span:last-child {
-  margin-right: -7px; }
+div.dataButtons {
+  margin-top: 0.8em; }
 
 /* =========================== SVG styles ============================== */
 path {
@@ -268,7 +268,6 @@ g.xAxis path, g.yAxis path {
   stroke: #666666;
   stroke-width: 1px;
   shape-rendering: crispEdges; }
-
 g.xAxis text, g.yAxis text {
   fill: #d1d1d1;
   font-size: 0.8em; }
