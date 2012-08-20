@@ -5,7 +5,11 @@
 #include <string>
 #include <set>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wsign-compare"
 #include <websocketpp.hpp>
+#pragma GCC diagnostic pop
 
 namespace objectifLune
 {
@@ -14,7 +18,7 @@ namespace objectifLune
 	public: 
 		
 		void on_message(websocketpp::server::connection_ptr con,
-						websocketpp::message::data_ptr msg) const;
+						websocketpp::message::data_ptr msg);
 		
 		void on_open(websocketpp::server::connection_ptr con);
 		
