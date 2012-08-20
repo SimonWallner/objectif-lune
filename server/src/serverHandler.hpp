@@ -14,19 +14,22 @@ namespace objectifLune
 	public: 
 		
 		void on_message(websocketpp::server::connection_ptr con,
-						websocketpp::message::data_ptr msg);
+						websocketpp::message::data_ptr msg) const;
 		
 		void on_open(websocketpp::server::connection_ptr con);
 		
 		void on_close(websocketpp::server::connection_ptr con);
 		
-		void broadcast(std::string msg);
+		void broadcast(std::string msg) const;
+		
+		// return true if there is at least one client connected.
+		bool hasConnections() const;
 		
 	private:
 		typedef std::set<connection_ptr> connection_set;
 		
 		connection_set connections;
-		boost::mutex mutex;    // guards m_connections
+		mutable boost::mutex mutex;    // guards m_connections
 	};
 }
 
