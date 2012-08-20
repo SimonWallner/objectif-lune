@@ -5,7 +5,7 @@
 using namespace objectifLune;
 
 void ServerHandler::on_message(websocketpp::server::connection_ptr con,
-							   websocketpp::message::data_ptr msg) const
+							   websocketpp::message::data_ptr msg)
 {
 //	if (msg->get_opcode() != websocketpp::frame::opcode::TEXT) {
 //        return;
