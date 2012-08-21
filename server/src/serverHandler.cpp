@@ -29,11 +29,17 @@ void ServerHandler::on_open(websocketpp::server::connection_ptr con)
 }
 
 // broadcast to all clients
-void ServerHandler::broadcast(std::string msg) {
+void ServerHandler::broadcast(std::string msg) const
+{
 	boost::lock_guard<boost::mutex> guard(mutex);
 	for (connection_set::const_iterator ci = connections.begin();
 		 ci != connections.end();
 		 ci++) {
 		(*ci)->send(msg, websocketpp::frame::opcode::TEXT);
 	}
+}
+
+bool ServerHandler::hasConnections() const
+{
+	return connections.size() > 0;
 }

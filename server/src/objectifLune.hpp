@@ -14,19 +14,21 @@ namespace objectifLune
 
 		void startService();
 		
+		void waitForConnections(unsigned int timeout = 1000) const;
+		
 		// logging methods
-		void trace(std::string msg);
-		void debug(std::string msg);
-		void info(std::string msg);
-		void warn(std::string msg);
-		void error(std::string msg);
-		void fatal(std::string msg);
+		void trace(std::string msg) const;
+		void debug(std::string msg) const;
+		void info(std::string msg) const;
+		void warn(std::string msg) const;
+		void error(std::string msg) const;
+		void fatal(std::string msg) const;
 		
 		// sending telemetry data
-		void scalar(std::string name, float value);
+		void scalar(std::string name, float value) const;
 		
 		// sending time domain telemetry data
-		void data(float reference, std::string name, float value);
+		void data(float reference, std::string name, float value) const;
 		
 		// register a float variable for tweaking
 //		void registerVariable(std::string name, float* pointer, float min, float max, std::string description);
@@ -37,7 +39,7 @@ namespace objectifLune
 		
 		unsigned short portNumber;
 		
-		void sendLogMessage(std::string logLevel, std::string msg);
+		void sendLogMessage(std::string logLevel, std::string msg) const;
 		
 		void startupThread();
 	};

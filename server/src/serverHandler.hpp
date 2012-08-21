@@ -5,7 +5,11 @@
 #include <string>
 #include <set>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wsign-compare"
 #include <websocketpp.hpp>
+#pragma GCC diagnostic pop
 
 namespace objectifLune
 {
@@ -20,13 +24,16 @@ namespace objectifLune
 		
 		void on_close(websocketpp::server::connection_ptr con);
 		
-		void broadcast(std::string msg);
+		void broadcast(std::string msg) const;
+		
+		// return true if there is at least one client connected.
+		bool hasConnections() const;
 		
 	private:
 		typedef std::set<connection_ptr> connection_set;
 		
 		connection_set connections;
-		boost::mutex mutex;    // guards m_connections
+		mutable boost::mutex mutex;    // guards m_connections
 	};
 }
 
