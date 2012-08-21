@@ -103,7 +103,9 @@ div.sessionMarker, #log div.sessionMarker {
   text-align: center;
   border-radius: 1em;
   color: #D1D1D1;
-  clear: both; }
+  clear: both;
+  margin-top: 2px;
+  padding: 2px 3px 2px 3px; }
 
 div.trace {
   color: #C5DDEA; }

@@ -513,10 +513,10 @@ function addLog(datum) {
 	d3.select('#lineCounter')
 		.text(logData.length);
 	
-	d3.select('#log').selectAll('div')
+	d3.select('#log').selectAll('div.logEntry')
 		.data(logData)
 			.enter().append('div')
-				.attr('class', function(d) { return d.level; })
+				.attr('class', function(d) { return 'logEntry ' + d.level; })
 				.text(function(d) { return d.message; })
 				.style('opacity', function(d) {
 					if (((showTrace === showState.faded) && d.level === 'trace') ||
