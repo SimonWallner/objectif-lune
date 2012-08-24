@@ -1,5 +1,7 @@
-#include <objectifLune.hpp>
+#include <objectif-lune/objectifLune.hpp>
 #include <iostream>
+#include <math.h>
+#include <boost/thread.hpp>
 
 using namespace objectifLune;
 

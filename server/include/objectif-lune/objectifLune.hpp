@@ -3,10 +3,10 @@
 
 #include <string>
 
-#include "serverHandler.hpp"
-
 namespace objectifLune
 {
+	class ServerHandler;
+	
 	class Server
 	{
 	public:

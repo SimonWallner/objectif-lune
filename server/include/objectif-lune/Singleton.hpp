@@ -1,7 +1,7 @@
 #ifndef OBJECTIF_LUNE_SINGLETON
 #define OBJECTIF_LUNE_SINGLETON
 
-#include "Server.hpp"
+#include <objectif-lune/Server.hpp>
 
 namespace objectifLune
 {
