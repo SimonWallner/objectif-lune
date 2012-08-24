@@ -18,18 +18,6 @@ namespace objectifLune
 	public:
 		static Server* Get();
 	};
-	
-	Server* Singleton::instance = 0;
-	
-	Server* Singleton::Get()
-	{
-		if (!instance)
-		{
-			instance = new Server();
-			instance->startService();
-		}
-		return instance;
-	}
 }
 
 #endif
