@@ -13,6 +13,7 @@ file(GLOB_RECURSE SOURCE_FILES *.cpp)
 add_library(objectif-lune
 	${SOURCE_FILES}
 	${HEADER_FILES}
+	${INCLUDE_HEADER_FILES}
 )
 
 target_link_libraries(objectif-lune

@@ -1,16 +1,13 @@
-#include <objectif-lune/objectifLune.hpp>
+#include <objectif-lune/Singleton.hpp>
 #include <iostream>
 #include <math.h>
 #include <boost/thread.hpp>
-
-using namespace objectifLune;
 
 int main(int argc, char *argv[])
 {
 	std::cout << "starting example server" << std::endl;
 	
-	Server* server = new Server();
-	server->startService();
+	objectifLune::Server* server = objectifLune::Singleton::Get();
 	
 	int delay = 50;
 	unsigned long frameCounter = 0;
