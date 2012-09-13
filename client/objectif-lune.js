@@ -115,7 +115,7 @@ function connect() {
 	
 	ws.onmessage = function(msg) {
 		var cleanMessage = msg.data.replace(/\n/g, '<br>');
-		cleanMessage = cleanMessage.replace(/\t/g, '&emsp;');
+		cleanMessage = cleanMessage.replace(/\t/g, '&emsp;&emsp;');
 		var data = JSON.parse(cleanMessage);
 		
 		if (data.type === 'log') {
@@ -519,7 +519,7 @@ function addLog(datum) {
 		.data(logData)
 			.enter().append('div')
 				.attr('class', function(d) { return 'logEntry ' + d.level; })
-				.text(function(d) { return d.message; })
+				.html(function(d) { return d.message; })
 				.style('opacity', function(d) {
 					if (((showTrace === showState.faded) && d.level === 'trace') ||
 						((showDebug === showState.faded) && d.level === 'debug') ||
