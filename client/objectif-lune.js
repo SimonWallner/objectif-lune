@@ -113,8 +113,10 @@ function connect() {
 		state = connectionState.notConnected;
 	};
 	
-	ws.onmessage = function(msg) {	
-		var data = JSON.parse(msg.data);
+	ws.onmessage = function(msg) {
+		var cleanMessage = msg.data.replace(/\n/g, '<br>');
+		cleanMessage = cleanMessage.replace(/\t/g, '&emsp;');
+		var data = JSON.parse(cleanMessage);
 		
 		if (data.type === 'log') {
 			addLog(data.payload);
