@@ -671,17 +671,17 @@ function init() {
 		toggleCube(showFatal, '#toggleFatal', 'fatal');
 	});
 	
-	
-	$('#clearLog').click(function() {
+	var clearLog = function() {
 		logData = [];
 		d3.select('#lineCounter')
 			.text('--');
 		
 		d3.selectAll('div.log div')
 			.remove();
-	})
+	}
+	$('#clearLog').click(clearLog);
 	
-	$('#clearScalar').click(function() {
+	var clearScalar = function() {
 		scalarData = [];
 		
 		d3.selectAll('div.scalar div')
@@ -689,6 +689,12 @@ function init() {
 		
 		d3.select('#scalar').append('div')
 			.attr('id', 'scalar-session-' + sessionID)
+	}
+	$('#clearScalar').click(clearScalar)
+	
+	$(document).bind('keyup', 'k', function() {
+		clearLog();
+		clearScalar();
 	})
 }
 
