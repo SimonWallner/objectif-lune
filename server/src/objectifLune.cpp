@@ -39,7 +39,7 @@ void Server::startupThread()
 	}
 }
 
-void Server::sendLogMessage(const std::string logLevel, const std::string msg) const
+void Server::sendLogMessage(const std::string& logLevel, const std::string& msg) const
 {
 	std::stringstream sstr;
 	sstr << "{\"type\": \"log\", \"payload\": {\"level\": \""
@@ -51,37 +51,37 @@ void Server::sendLogMessage(const std::string logLevel, const std::string msg) c
 	serverHandler->broadcast(sstr.str());
 }
 
-void Server::trace(const std::string msg) const
+void Server::trace(const std::string& msg) const
 {
 	sendLogMessage("trace", msg);
 }
 
-void Server::debug(const std::string msg) const
+void Server::debug(const std::string& msg) const
 {
 	sendLogMessage("debug", msg);
 }
 
-void Server::info(const std::string msg) const
+void Server::info(const std::string& msg) const
 {
 	sendLogMessage("info", msg);
 }
 
-void Server::warn(const std::string msg) const
+void Server::warn(const std::string& msg) const
 {
 	sendLogMessage("warn", msg);
 }
 
-void Server::error(const std::string msg) const
+void Server::error(const std::string& msg) const
 {
 	sendLogMessage("error", msg);
 }
 
-void Server::fatal(const std::string msg) const
+void Server::fatal(const std::string& msg) const
 {
 	sendLogMessage("fatal", msg);
 }
 
-void Server::scalar(const std::string name, float value) const
+void Server::scalar(const std::string& name, float value) const
 {
 	std::stringstream sstr;
 	sstr << "{\"type\": \"scalar\", \"payload\": {\"name\": ";
@@ -93,7 +93,7 @@ void Server::scalar(const std::string name, float value) const
 	serverHandler->broadcast(sstr.str());
 }
 
-void Server::data(float reference, const std::string name, float value) const
+void Server::data(float reference, const std::string& name, float value) const
 {
 	std::stringstream sstr;
 	sstr << "{\"type\": \"data\", \"payload\": {\"name\": ";

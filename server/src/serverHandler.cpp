@@ -29,7 +29,7 @@ void ServerHandler::on_open(websocketpp::server::connection_ptr con)
 }
 
 // broadcast to all clients
-void ServerHandler::broadcast(std::string msg) const
+void ServerHandler::broadcast(const std::string& msg) const
 {
 	boost::lock_guard<boost::mutex> guard(mutex);
 	for (connection_set::const_iterator ci = connections.begin();

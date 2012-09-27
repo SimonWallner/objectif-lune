@@ -24,7 +24,7 @@ namespace objectifLune
 		
 		void on_close(websocketpp::server::connection_ptr con);
 		
-		void broadcast(std::string msg) const;
+		void broadcast(const std::string& msg) const;
 		
 		// return true if there is at least one client connected.
 		bool hasConnections() const;
