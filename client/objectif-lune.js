@@ -116,8 +116,7 @@ function connect() {
 	ws.onmessage = function(msg) {
 		var cleanMessage = msg.data.replace(/\n/g, '<br>');
 		cleanMessage = cleanMessage.replace(/\t/g, '&emsp;&emsp;');
-		cleanMessage = cleanMessage.replace(/\/g, '\\');
-		cleanMessage = cleanMessage.replace(/"/g, '\"');
+		cleanMessage = cleanMessage.replace(/\\/g, '\\\\');
 		var data = JSON.parse(cleanMessage);
 		
 		if (data.type === 'log') {
