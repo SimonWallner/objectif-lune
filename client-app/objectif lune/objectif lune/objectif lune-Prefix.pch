@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'objectif lune' target in the 'objectif lune' project
-//
-
-#ifdef __OBJC__
-	#import <Cocoa/Cocoa.h>
-#endif
