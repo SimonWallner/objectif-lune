@@ -2,6 +2,7 @@
 #define OBJECTIF_LUNE_HPP_
 
 #include <string>
+#include <map>
 
 namespace objectifLune
 {
@@ -31,10 +32,9 @@ namespace objectifLune
 		void data(float reference, const std::string& name, float value) const;
 		
 		// register a float variable for tweaking
-//		void registerVariable(std::string name, float* pointer, float min, float max, std::string description);
-//		void registerVariable(std::string name, bool* pointer, std::string description);
+		void registerVariable(std::string name, float* pointer, float min, float max, std::string description);
+
 	private:
-		
 		ServerHandler* serverHandler;
 		
 		unsigned short portNumber;
@@ -42,6 +42,10 @@ namespace objectifLune
 		void sendLogMessage(const std::string& logLevel, const std::string& msg) const;
 		
 		void startupThread();
+		
+		typedef std::map<std::string, float*> FloatTweakingMap;
+		
+		FloatTweakingMap floatTweakingMap;
 	};
 }
 

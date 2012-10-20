@@ -106,3 +106,25 @@ void Server::data(float reference, const std::string& name, float value) const
 
 	serverHandler->broadcast(sstr.str());
 }
+
+void Server::registerVariable(std::string name, float* pointer, float min, float max, std::string description)
+{
+	floatTweakingMap[name] = pointer;
+	
+	std::stringstream sstr;
+	sstr << "{\"type\": \"floatVariable\", \"payload\": {\"name\": ";
+	sstr << "\"" << name << "\"";
+	sstr << ", \"value\": ";
+	sstr << *pointer;
+	sstr << ", \"min\": ";
+	sstr << min;
+	sstr << ", \"max\": ";
+	sstr << max;
+	sstr << ", \"description\": \"";
+	sstr << description;
+	sstr << "\"}}";
+	
+	std::cout << sstr.str() << std::endl;
+	
+	serverHandler->broadcast(sstr.str());
+}
