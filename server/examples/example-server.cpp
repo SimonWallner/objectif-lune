@@ -8,15 +8,18 @@ int main(int argc, char *argv[])
 	std::cout << "starting example server" << std::endl;
 	
 	objectifLune::Server* server = objectifLune::Singleton::Get();
+	server->waitForConnections();
 	
-	float foo = 42;
+	float magic = 42;
 	
-	server->registerVariable("tweak me variable", &foo, 0, 100, "pretty please");
+	server->registerVariable("tweak-me-variable", &magic, 0, 100, "pretty please");
+	server->registerVariable("pure-magic", &magic, 0, 100, "asdfasdfasdf");
 	
 	int delay = 50;
 	unsigned long frameCounter = 0;
 	while(true)
 	{
+		server->scalar("magic value", magic);
 //		server->scalar("frame time", 20.0f + (rand() & 100) / 20);
 //		server->scalar("long time field", 2000.0f + (rand() & 1000) / 20);
 //		server->scalar("textures loaded", (rand() & 9));

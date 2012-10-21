@@ -43,6 +43,10 @@ var dim = {
 	top: 5,
 	bottom: 17,
 }
+
+// === variable tweaking ===
+var floatVariables = [];
+
 dim.innerHeight = dim.height - (dim.top + dim.bottom);
 dim.innerWidth = dim.width - dim.left;
 
@@ -384,6 +388,54 @@ function connect() {
 								
 				// finally add the data.
 				addData(pl.name, pl.value, pl.reference);
+			}
+		}
+		else if (data.type == 'floatVariable') {
+			pl = data.payload;
+			
+			if (floatVariables[pl.name]) {
+				// ignore for now
+			}
+			else {
+				floatVariables[pl.name] = pl;
+				
+				var div = d3.select('#float-variables').append('div')
+					.attr('class', 'variable')
+					.attr('id', 'variable-' + pl.name);
+				
+				div.append('div')
+					.attr('class', 'title')
+					.text(pl.name + ': ' + pl.description);
+				
+				div.append('span')
+					.attr('class', 'min')
+					.text(pl.min);
+				
+				div.append('span')
+					.attr('class', 'value')
+					.text(pl.value);
+				
+				div.append('span')
+					.attr('class', 'max')
+					.text(pl.max);
+				
+				div.append('div')
+					.attr('class', 'clear');
+				
+				div.append('div')
+					.attr('id', 'variable-slider-' + pl.name);
+					
+				$('#variable-slider-' + pl.name).slider({
+					min: pl.min,
+					max: pl.max,
+					value: pl.value,
+					slide: function(event, ui) {
+						d3.select('#variable-' + pl.name).select('span.value')
+							.text(ui.value)
+						
+						// send values to server
+					}
+				});
 			}
 		}
 	};

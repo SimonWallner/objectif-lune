@@ -1,4 +1,13 @@
+@import url("d3/lib/jquery-ui/jquery-ui.css");
 /* colours:*/
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0; }
+
 body {
   background-color: #333;
   font-size: 13px;
@@ -297,6 +306,29 @@ span.updateInterval, span.bufferLength, span.logLin {
 
 div.dataButtons {
   margin-top: 0.8em; }
+
+/* === variables tweaking === */
+#float-variables div.variable {
+  width: 100%;
+  background-color: #3F3F3F;
+  border-radius: 0.5em;
+  padding: 8px;
+  margin-top: 5px; }
+  #float-variables div.variable div.title {
+    color: #88bee2; }
+  #float-variables div.variable span {
+    display: block; }
+  #float-variables div.variable span.min, #float-variables div.variable span.max {
+    width: 20%;
+    float: left;
+    padding-top: 1em; }
+  #float-variables div.variable span.value {
+    width: 60%;
+    float: left;
+    text-align: center;
+    font-size: 2em; }
+  #float-variables div.variable span.max {
+    text-align: right; }
 
 /* =========================== SVG styles ============================== */
 path {
