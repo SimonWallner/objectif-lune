@@ -4,11 +4,13 @@
 #include <string>
 #include <map>
 
+#include "serverHandler.hpp"
+
 namespace objectifLune
 {
 	class ServerHandler;
 	
-	class Server
+	class Server : public ServerHandler::MessageCallback
 	{
 	public:
 		Server(unsigned short portNumber = 60600);
@@ -33,7 +35,10 @@ namespace objectifLune
 		
 		// register a float variable for tweaking
 		void registerVariable(std::string name, float* pointer, float min, float max, std::string description);
-
+		
+		// @Override
+		void onMessage(std::string);
+		
 	private:
 		ServerHandler* serverHandler;
 		

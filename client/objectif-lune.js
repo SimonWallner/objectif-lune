@@ -433,7 +433,15 @@ function connect() {
 						d3.select('#variable-' + pl.name).select('span.value')
 							.text(ui.value)
 						
-						// send values to server
+						var response = {
+							type: "floatVariable",
+							payload: {
+								name: pl.name,
+								value: ui.value
+							}
+						}
+						
+						ws.send(JSON.stringify(response))
 					}
 				});
 			}

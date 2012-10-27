@@ -15,7 +15,17 @@ namespace objectifLune
 {
 	class ServerHandler : public websocketpp::server::handler
 	{
-	public: 
+	public:
+		
+		class MessageCallback
+		{
+		public:
+			virtual void onMessage(std::string message) = 0;
+		};
+
+	
+
+		ServerHandler(MessageCallback* callback);
 		
 		void on_message(websocketpp::server::connection_ptr con,
 						websocketpp::message::data_ptr msg);
@@ -34,6 +44,8 @@ namespace objectifLune
 		
 		connection_set connections;
 		mutable boost::mutex mutex;    // guards m_connections
+		
+		MessageCallback* messageCallback;
 	};
 }
 

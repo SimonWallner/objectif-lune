@@ -4,13 +4,19 @@
 
 using namespace objectifLune;
 
+ServerHandler::ServerHandler(MessageCallback* callback)
+	: messageCallback(callback)
+{}
+
 void ServerHandler::on_message(websocketpp::server::connection_ptr con,
 							   websocketpp::message::data_ptr msg)
 {
-//	if (msg->get_opcode() != websocketpp::frame::opcode::TEXT) {
-//        return;
-//    }
-//	std::string payload = msg->get_payload();
+	if (msg->get_opcode() != websocketpp::frame::opcode::TEXT)
+	{
+        return;
+    }
+	
+	messageCallback->onMessage(msg->get_payload());
 }
 
 void ServerHandler::on_close(websocketpp::server::connection_ptr con)

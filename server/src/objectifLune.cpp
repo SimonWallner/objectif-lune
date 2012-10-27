@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-#include "serverHandler.hpp"
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 using namespace objectifLune;
 
@@ -13,15 +14,17 @@ Server::Server(unsigned short _portNumber)
 
 void Server::startService()
 {
-	serverHandler = new objectifLune::ServerHandler();
+	serverHandler = new objectifLune::ServerHandler(this);
 	boost::thread serviceThread(&Server::startupThread, this);
 }
+
 
 void Server::waitForConnections(unsigned int timeout) const
 {
 //	if (
 	boost::this_thread::sleep(boost::posix_time::milliseconds(timeout));
 }
+
 
 void Server::startupThread()
 {
@@ -39,6 +42,7 @@ void Server::startupThread()
 	}
 }
 
+
 void Server::sendLogMessage(const std::string& logLevel, const std::string& msg) const
 {
 	std::stringstream sstr;
@@ -51,35 +55,42 @@ void Server::sendLogMessage(const std::string& logLevel, const std::string& msg)
 	serverHandler->broadcast(sstr.str());
 }
 
+
 void Server::trace(const std::string& msg) const
 {
 	sendLogMessage("trace", msg);
 }
+
 
 void Server::debug(const std::string& msg) const
 {
 	sendLogMessage("debug", msg);
 }
 
+
 void Server::info(const std::string& msg) const
 {
 	sendLogMessage("info", msg);
 }
+
 
 void Server::warn(const std::string& msg) const
 {
 	sendLogMessage("warn", msg);
 }
 
+
 void Server::error(const std::string& msg) const
 {
 	sendLogMessage("error", msg);
 }
 
+
 void Server::fatal(const std::string& msg) const
 {
 	sendLogMessage("fatal", msg);
 }
+
 
 void Server::scalar(const std::string& name, float value) const
 {
@@ -92,6 +103,7 @@ void Server::scalar(const std::string& name, float value) const
 	
 	serverHandler->broadcast(sstr.str());
 }
+
 
 void Server::data(float reference, const std::string& name, float value) const
 {
@@ -106,6 +118,7 @@ void Server::data(float reference, const std::string& name, float value) const
 
 	serverHandler->broadcast(sstr.str());
 }
+
 
 void Server::registerVariable(std::string name, float* pointer, float min, float max, std::string description)
 {
@@ -127,4 +140,30 @@ void Server::registerVariable(std::string name, float* pointer, float min, float
 	std::cout << sstr.str() << std::endl;
 	
 	serverHandler->broadcast(sstr.str());
+}
+
+
+void Server::onMessage(std::string message)
+{
+	std::stringstream payload;
+	payload << message;
+	
+	using boost::property_tree::ptree;
+	ptree pt;
+	
+	read_json(payload, pt);
+	
+	std::string type = pt.get<std::string>("type");
+	
+	if (type == "floatVariable")
+	{
+		std::string name = pt.get<std::string>("payload.name");
+		float value = pt.get<float>("payload.value");
+		
+		FloatTweakingMap::const_iterator needle = floatTweakingMap.find(name);
+		if (needle != floatTweakingMap.end())
+		{
+			*(needle->second) = value;
+		}
+	}
 }
