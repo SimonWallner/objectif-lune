@@ -4,7 +4,7 @@
 #include <string>
 #include <map>
 
-#include "serverHandler.hpp"
+#include <objectif-lune/serverHandler.hpp>
 
 namespace objectifLune
 {
