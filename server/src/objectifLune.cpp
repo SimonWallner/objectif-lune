@@ -5,6 +5,8 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
+#include "serverHandler.hpp"
+
 using namespace objectifLune;
 
 Server::Server(unsigned short _portNumber)
@@ -137,7 +139,7 @@ void Server::registerVariable(std::string name, float* pointer, float min, float
 	sstr << description;
 	sstr << "\"}}";
 	
-	std::cout << sstr.str() << std::endl;
+//	std::cout << sstr.str() << std::endl;
 	
 	serverHandler->broadcast(sstr.str());
 }

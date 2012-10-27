@@ -4,13 +4,13 @@
 #include <string>
 #include <map>
 
-#include <objectif-lune/serverHandler.hpp>
+#include "MessageCallback.hpp"
 
 namespace objectifLune
 {
 	class ServerHandler;
 	
-	class Server : public ServerHandler::MessageCallback
+	class Server : public MessageCallback
 	{
 	public:
 		Server(unsigned short portNumber = 60600);

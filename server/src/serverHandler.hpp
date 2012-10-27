@@ -11,19 +11,13 @@
 #include <websocketpp.hpp>
 #pragma GCC diagnostic pop
 
+#include <objectif-lune/MessageCallback.hpp>
+
 namespace objectifLune
 {
 	class ServerHandler : public websocketpp::server::handler
 	{
 	public:
-		
-		class MessageCallback
-		{
-		public:
-			virtual void onMessage(std::string message) = 0;
-		};
-
-	
 
 		ServerHandler(MessageCallback* callback);
 		
