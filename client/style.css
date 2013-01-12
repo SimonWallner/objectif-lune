@@ -38,7 +38,8 @@ p {
 
 hr {
   height: 0.5em;
-  background-color: #E8E8E8; }
+  background-color: #E8E8E8;
+}
 
 div.notice-area {
   width: 300px;
@@ -190,6 +191,10 @@ div.clearData {
 .rounded-inline {
   border-radius: 1em;
   padding: 3px 7px 3px 7px; }
+
+.button {
+	background-color: #444;
+}
 
 span.lines {
   background-color: #D1D1D1;
