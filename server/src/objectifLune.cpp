@@ -168,4 +168,7 @@ void Server::onMessage(std::string message)
 			*(needle->second) = value;
 		}
 	}
+	else {
+		std::cout << "unknown message: " << payload.str() << std::endl;
+	}
 }

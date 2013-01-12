@@ -36,6 +36,8 @@ namespace objectifLune
 		// register a float variable for tweaking
 		void registerVariable(std::string name, float* pointer, float min, float max, std::string description);
 		
+//		void registerScreenshotHandler( some handler stuff...)
+		
 		// @Override
 		void onMessage(std::string);
 		
