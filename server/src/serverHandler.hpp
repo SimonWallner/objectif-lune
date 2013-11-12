@@ -5,13 +5,21 @@
 #include <string>
 #include <set>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wsign-compare"
 #include <websocketpp.hpp>
+#pragma GCC diagnostic pop
+
+#include <objectif-lune/MessageCallback.hpp>
 
 namespace objectifLune
 {
 	class ServerHandler : public websocketpp::server::handler
 	{
-	public: 
+	public:
+
+		ServerHandler(MessageCallback* callback);
 		
 		void on_message(websocketpp::server::connection_ptr con,
 						websocketpp::message::data_ptr msg);
@@ -20,13 +28,18 @@ namespace objectifLune
 		
 		void on_close(websocketpp::server::connection_ptr con);
 		
-		void broadcast(std::string msg);
+		void broadcast(const std::string& msg) const;
+		
+		// return true if there is at least one client connected.
+		bool hasConnections() const;
 		
 	private:
 		typedef std::set<connection_ptr> connection_set;
 		
 		connection_set connections;
-		boost::mutex mutex;    // guards m_connections
+		mutable boost::mutex mutex;    // guards m_connections
+		
+		MessageCallback* messageCallback;
 	};
 }
 

@@ -43,6 +43,10 @@ var dim = {
 	top: 5,
 	bottom: 17,
 }
+
+// === variable tweaking ===
+var floatVariables = [];
+
 dim.innerHeight = dim.height - (dim.top + dim.bottom);
 dim.innerWidth = dim.width - dim.left;
 
@@ -113,8 +117,11 @@ function connect() {
 		state = connectionState.notConnected;
 	};
 	
-	ws.onmessage = function(msg) {	
-		var data = JSON.parse(msg.data);
+	ws.onmessage = function(msg) {
+		var cleanMessage = msg.data.replace(/\n/g, '<br>');
+		cleanMessage = cleanMessage.replace(/\t/g, '&emsp;&emsp;');
+		cleanMessage = cleanMessage.replace(/\\/g, '\\\\');
+		var data = JSON.parse(cleanMessage);
 		
 		if (data.type === 'log') {
 			addLog(data.payload);
@@ -383,6 +390,62 @@ function connect() {
 				addData(pl.name, pl.value, pl.reference);
 			}
 		}
+		else if (data.type == 'floatVariable') {
+			pl = data.payload;
+			
+			if (floatVariables[pl.name]) {
+				// ignore for now
+			}
+			else {
+				floatVariables[pl.name] = pl;
+				
+				var div = d3.select('#float-variables').append('div')
+					.attr('class', 'variable')
+					.attr('id', 'variable-' + pl.name);
+				
+				div.append('div')
+					.attr('class', 'title')
+					.text(pl.name + ': ' + pl.description);
+				
+				div.append('span')
+					.attr('class', 'min')
+					.text(pl.min);
+				
+				div.append('span')
+					.attr('class', 'value')
+					.text(pl.value);
+				
+				div.append('span')
+					.attr('class', 'max')
+					.text(pl.max);
+				
+				div.append('div')
+					.attr('class', 'clear');
+				
+				div.append('div')
+					.attr('id', 'variable-slider-' + pl.name);
+					
+				$('#variable-slider-' + pl.name).slider({
+					min: pl.min,
+					max: pl.max,
+					value: pl.value,
+					slide: function(event, ui) {
+						d3.select('#variable-' + pl.name).select('span.value')
+							.text(ui.value)
+						
+						var response = {
+							type: "floatVariable",
+							payload: {
+								name: pl.name,
+								value: ui.value
+							}
+						}
+						
+						ws.send(JSON.stringify(response))
+					}
+				});
+			}
+		}
 	};
 }
 
@@ -513,11 +576,11 @@ function addLog(datum) {
 	d3.select('#lineCounter')
 		.text(logData.length);
 	
-	d3.select('#log').selectAll('div')
+	d3.select('#log').selectAll('div.logEntry')
 		.data(logData)
 			.enter().append('div')
-				.attr('class', function(d) { return d.level; })
-				.text(function(d) { return d.message; })
+				.attr('class', function(d) { return 'logEntry ' + d.level; })
+				.html(function(d) { return d.message; })
 				.style('opacity', function(d) {
 					if (((showTrace === showState.faded) && d.level === 'trace') ||
 						((showDebug === showState.faded) && d.level === 'debug') ||
@@ -669,17 +732,17 @@ function init() {
 		toggleCube(showFatal, '#toggleFatal', 'fatal');
 	});
 	
-	
-	$('#clearLog').click(function() {
+	var clearLog = function() {
 		logData = [];
 		d3.select('#lineCounter')
 			.text('--');
 		
 		d3.selectAll('div.log div')
 			.remove();
-	})
+	}
+	$('#clearLog').click(clearLog);
 	
-	$('#clearScalar').click(function() {
+	var clearScalar = function() {
 		scalarData = [];
 		
 		d3.selectAll('div.scalar div')
@@ -687,6 +750,12 @@ function init() {
 		
 		d3.select('#scalar').append('div')
 			.attr('id', 'scalar-session-' + sessionID)
+	}
+	$('#clearScalar').click(clearScalar)
+	
+	$(document).bind('keyup', 'k', function() {
+		clearLog();
+		clearScalar();
 	})
 }
 

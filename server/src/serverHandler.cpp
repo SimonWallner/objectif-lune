@@ -4,13 +4,19 @@
 
 using namespace objectifLune;
 
+ServerHandler::ServerHandler(MessageCallback* callback)
+	: messageCallback(callback)
+{}
+
 void ServerHandler::on_message(websocketpp::server::connection_ptr con,
 							   websocketpp::message::data_ptr msg)
 {
-//	if (msg->get_opcode() != websocketpp::frame::opcode::TEXT) {
-//        return;
-//    }
-//	std::string payload = msg->get_payload();
+	if (msg->get_opcode() != websocketpp::frame::opcode::TEXT)
+	{
+        return;
+    }
+	
+	messageCallback->onMessage(msg->get_payload());
 }
 
 void ServerHandler::on_close(websocketpp::server::connection_ptr con)
@@ -29,11 +35,17 @@ void ServerHandler::on_open(websocketpp::server::connection_ptr con)
 }
 
 // broadcast to all clients
-void ServerHandler::broadcast(std::string msg) {
+void ServerHandler::broadcast(const std::string& msg) const
+{
 	boost::lock_guard<boost::mutex> guard(mutex);
 	for (connection_set::const_iterator ci = connections.begin();
 		 ci != connections.end();
 		 ci++) {
 		(*ci)->send(msg, websocketpp::frame::opcode::TEXT);
 	}
+}
+
+bool ServerHandler::hasConnections() const
+{
+	return connections.size() > 0;
 }

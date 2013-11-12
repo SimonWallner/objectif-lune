@@ -1,3 +1,5 @@
+@import url("d3/lib/jquery-ui/jquery-ui.css");
+
 /* colours:*/
 $white1: #E8E8E8;
 $white2: #DBDBDB;
@@ -24,7 +26,14 @@ $error: $orange;
 $fatal: $red;
 
 
- 
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
 
 body {
 	background-color: #333;
@@ -146,6 +155,8 @@ div.sessionMarker, #log div.sessionMarker {
 	border-radius: 1em;
 	color: #D1D1D1;
 	clear: both;
+	margin-top: 2px;
+	padding: 2px 3px 2px 3px
 }
 
 
@@ -336,6 +347,44 @@ span.updateInterval, span.bufferLength, span.logLin {
 
 div.dataButtons {
 	margin-top: 0.8em;
+}
+
+
+/* === variables tweaking === */
+#float-variables {
+	div.variable {
+		width: 100%;
+		background-color: #3F3F3F;
+		border-radius: 0.5em;
+		padding: 8px;
+		margin-top: 5px;
+		
+		div.title {
+			color: $blue3;
+		}
+		
+		span {
+			display: block;
+		}
+		
+		span.min, span.max  {
+			width: 20%;
+			float: left;
+			padding-top: 1em;
+			
+		}
+		
+		span.value {
+			width: 60%;
+			float: left;
+			text-align: center;
+			font-size: 2em;
+		}
+		
+		span.max {
+			text-align: right;
+		}
+	}
 }
 
 /* =========================== SVG styles ============================== */
