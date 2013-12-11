@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <functional>
 
 #include "MessageCallback.hpp"
 
@@ -41,6 +42,15 @@ namespace objectifLune
 		// @Override
 		void onMessage(std::string);
 		
+		class StateCallback
+		{
+		public:
+			virtual void onStateChange(float positionX, float positionY, float positionZ, float phi, float theta) =0;
+		};
+		
+		// register function to set state from outside
+		void registerStateChangeCallback(StateCallback* callback);
+		
 	private:
 		ServerHandler* serverHandler;
 		
@@ -53,6 +63,9 @@ namespace objectifLune
 		typedef std::map<std::string, float*> FloatTweakingMap;
 		
 		FloatTweakingMap floatTweakingMap;
+		
+		StateCallback* stateCallback;
+		
 	};
 }
 
