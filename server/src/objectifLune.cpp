@@ -168,4 +168,18 @@ void Server::onMessage(std::string message)
 			*(needle->second) = value;
 		}
 	}
+	else if (type == "state")
+	{
+		auto positionX = pt.get<float>("payload.positionX");
+		auto positionY = pt.get<float>("payload.positionY");
+		auto positionZ = pt.get<float>("payload.positionZ");
+		auto phi = pt.get<float>("payload.phi");
+		auto theta = pt.get<float>("payload.theta");
+		
+		stateCallback->onStateChange(positionX, positionY, positionZ, phi, theta);
+	}
+	else
+	{
+		warn("unknown message: " + payload.str());
+	}
 }
