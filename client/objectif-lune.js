@@ -1,3 +1,8 @@
+ // monkey patching
+ String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+
 var ws;
 var url;
 var connectionState = {
@@ -51,6 +56,9 @@ dim.innerHeight = dim.height - (dim.top + dim.bottom);
 dim.innerWidth = dim.width - dim.left;
 
 
+// === game state ===
+var samples = [];
+
 // ==== session stuff ====
 var sessionID = 0;
 
@@ -103,7 +111,7 @@ function connect() {
 	};
 	
 	ws.onerror = function(e) {
-		console.log(e);
+		// console.log(e);
 		state = connectionState.notConnected;
 		d3.select('#connectionStatus')
 			.text('disconnected')
@@ -751,11 +759,53 @@ function init() {
 		d3.select('#scalar').append('div')
 			.attr('id', 'scalar-session-' + sessionID)
 	}
-	$('#clearScalar').click(clearScalar)
+	$('#clearScalar').click(clearScalar);
 	
 	$(document).bind('keyup', 'k', function() {
 		clearLog();
 		clearScalar();
+	});
+
+	$('#state-reload-resources').click(function() {
+		loadResource('http://localhost:8000/', function(data) {
+			var resources = JSON.parse(data).resources;
+			
+			var stateOption = $('#state-resources');
+				stateOption.empty();
+				stateOption.append("<option>--</option>");
+
+			resources.forEach(function(element) {
+				if (element.endsWith('.json')) {
+					stateOption.append("<option>" + element + "</option>");
+				}
+			});
+		});
+	});
+
+	$('#state-resources').change(function() {
+		var value = $(this).val();
+
+		loadResource('http://localhost:8000/' + value, function(data) {
+			var parsedData = JSON.parse(data);
+			samples = parsedData.samples;
+
+			$('#state').empty();
+			$('#state').append('<div></div>');
+			var slider = $('#state div');
+			slider.slider({
+				min: 0,
+				max: samples.length-1,
+				value: 0,
+				slide: function(event, ui) {
+					var response = {
+							type: "state",
+							payload: samples[i]
+						};
+						
+					ws.send(JSON.stringify(response))
+				}
+			});
+		})		
 	})
 }
 
