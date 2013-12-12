@@ -11,4 +11,9 @@ add_executable(example-server
 	example-server.cpp)
 
 target_link_libraries(example-server
-	objectif-lune)
+	objectif-lune
+	${Boost_SYSTEM_LIBRARY}
+	${Boost_REGEX_LIBRARY}
+	${Boost_THREAD_LIBRARY}
+	${Boost_DATE_TIME_LIBRARY}
+)
