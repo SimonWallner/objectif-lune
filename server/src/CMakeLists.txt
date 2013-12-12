@@ -1,5 +1,7 @@
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
+add_definitions(-pedantic -std=c++11)
+add_definitions(-Wall -Wextra -Werror)
 add_definitions(-Wno-c++11-extensions)
 					
 include_directories(

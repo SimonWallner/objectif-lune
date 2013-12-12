@@ -8,6 +8,8 @@ ServerHandler::ServerHandler(MessageCallback* callback)
 	: messageCallback(callback)
 {}
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 void ServerHandler::on_message(websocketpp::server::connection_ptr con,
 							   websocketpp::message::data_ptr msg)
 {
@@ -18,6 +20,7 @@ void ServerHandler::on_message(websocketpp::server::connection_ptr con,
 	
 	messageCallback->onMessage(msg->get_payload());
 }
+#pragma GCC diagnostic pop
 
 void ServerHandler::on_close(websocketpp::server::connection_ptr con)
 {
