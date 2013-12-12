@@ -25,6 +25,13 @@ $warn: $yellow;
 $error: $orange;
 $fatal: $red;
 
+@font-face {
+  font-family: 'Entypo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Entypo'), url(Entypo/entypo.woff) format('woff');
+}
+
 
 .clear {
   clear: both;
@@ -387,6 +394,65 @@ div.dataButtons {
 	}
 }
 
+/* === variables tweaking === */
+#state {
+	width: 100%;
+	background-color: #3F3F3F;
+	border-radius: 0.5em;
+	padding: 8px;
+	margin-top: 5px;
+	
+	div.title {
+		color: $blue3;
+	}
+	
+	span {
+		display: inline-block;
+	}
+	
+	span.min, span.max  {
+		width: 20%;
+		float: left;
+		padding-top: 1em;
+	}
+	
+	span.value {
+		width: 60%;
+		float: left;
+		text-align: center;
+		font-size: 2em;
+	}
+	
+	span.max {
+		text-align: right;
+	}
+
+	#state-controls {
+		margin-top: 0.8em;
+	}
+	span.transport-button {
+		border-radius: 3px;
+		background-color: $white3;
+		color: $dark;
+		min-width: 1em;
+		text-align: center;
+		font-weight: 900;
+		font-family: 'Entypo';
+		font-size: 2em;
+	}
+
+	span.active {
+		background-color: $orange;
+	}
+}
+
+
+#footer {
+	margin-top: 1em, auto, 1em, auto;
+	font-size: 0.8em;
+	color: $white3;
+	padding: 1em;
+}
 /* =========================== SVG styles ============================== */
 
 

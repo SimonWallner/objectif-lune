@@ -9,6 +9,8 @@
 	<script type="text/javascript" src="d3/lib/jquery-ui/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="jquery.hotkeys.js"></script>
 	<script type="text/javascript" src="loadResource.js"></script>
+	<script type="text/javascript" src="timer.js"></script>
+	<script type="text/javascript" src="util.js"></script>
 	<script type="text/javascript" src="objectif-lune.js"></script>
 
 	
@@ -90,7 +92,20 @@
 		</select>
 		<button id="state-reload-resources">reload</buttonv>
 	</div>
-	<div id="state" class="state"></div>		
+	<div id="state" class="state">
+		<div class="title">Game States</div>
+		<span class="min" id="state-min">--</span>
+		<span class="value" id="state-value">--</span>
+		<span class="max" id="state-max">--</span>
+		<div class="clear"></div>
+		<div id="state-slider"></div>
+		<div id="state-controls">
+			<span class="transport-button" id="transport-step-back">&#9198;</span>
+			<span class="transport-button" id="transport-pause">&#8214;</span>
+			<span class="transport-button" id="transport-play">&#9654;</span>
+			<span class="transport-button" id="transport-step-forward">&#9197;</span>
+		</div>
+	</div>		
 	
 
 	<!-- ========================== LOGGER =============================== -->
@@ -116,11 +131,9 @@
 	<span class="rounded-inline" id="clearLog">clear log!</span>
 		
 	<div class="log" id="log"></div>
-	
-
-	
-
 </div>
+
+<div id="footer">*) Entypo pictograms by Daniel Bruce — www.entypo.com</div>
 
 </body>
 </html>

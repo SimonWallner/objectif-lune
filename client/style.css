@@ -1,5 +1,11 @@
 @import url("d3/lib/jquery-ui/jquery-ui.css");
 /* colours:*/
+@font-face {
+  font-family: 'Entypo';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Entypo"), url(Entypo/entypo.woff) format("woff"); }
+
 .clear {
   clear: both;
   display: block;
@@ -38,8 +44,7 @@ p {
 
 hr {
   height: 0.5em;
-  background-color: #E8E8E8;
-}
+  background-color: #E8E8E8; }
 
 div.notice-area {
   width: 300px;
@@ -192,10 +197,6 @@ div.clearData {
   border-radius: 1em;
   padding: 3px 7px 3px 7px; }
 
-.button {
-	background-color: #444;
-}
-
 span.lines {
   background-color: #D1D1D1;
   color: #333; }
@@ -334,6 +335,48 @@ div.dataButtons {
     font-size: 2em; }
   #float-variables div.variable span.max {
     text-align: right; }
+
+/* === variables tweaking === */
+#state {
+  width: 100%;
+  background-color: #3F3F3F;
+  border-radius: 0.5em;
+  padding: 8px;
+  margin-top: 5px; }
+  #state div.title {
+    color: #88bee2; }
+  #state span {
+    display: inline-block; }
+  #state span.min, #state span.max {
+    width: 20%;
+    float: left;
+    padding-top: 1em; }
+  #state span.value {
+    width: 60%;
+    float: left;
+    text-align: center;
+    font-size: 2em; }
+  #state span.max {
+    text-align: right; }
+  #state #state-controls {
+    margin-top: 0.8em; }
+  #state span.transport-button {
+    border-radius: 3px;
+    background-color: #d1d1d1;
+    color: #333333;
+    min-width: 1em;
+    text-align: center;
+    font-weight: 900;
+    font-family: 'Entypo';
+    font-size: 2em; }
+  #state span.active {
+    background-color: #d8782a; }
+
+#footer {
+  margin-top: 1em, auto, 1em, auto;
+  font-size: 0.8em;
+  color: #d1d1d1;
+  padding: 1em; }
 
 /* =========================== SVG styles ============================== */
 path {

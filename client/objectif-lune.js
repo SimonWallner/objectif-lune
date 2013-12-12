@@ -58,6 +58,10 @@ dim.innerWidth = dim.width - dim.left;
 
 // === game state ===
 var samples = [];
+var statePlay = false;
+var stateTime = 0;
+var playHeadIntervalHandle = null;
+var timer = new Timer();
 
 // ==== session stuff ====
 var sessionID = 0;
@@ -789,9 +793,9 @@ function init() {
 			var parsedData = JSON.parse(data);
 			samples = parsedData.samples;
 
-			$('#state').empty();
-			$('#state').append('<div></div>');
-			var slider = $('#state div');
+			$('#state-slider').empty();
+			$('#state-slider').append('<div></div>');
+			var slider = $('#state-slider div');
 			slider.slider({
 				min: 0,
 				max: samples.length-1,
@@ -799,13 +803,41 @@ function init() {
 				slide: function(event, ui) {
 					var response = {
 							type: "state",
-							payload: samples[i]
+							payload: samples[ui.value]
 						};
 						
 					ws.send(JSON.stringify(response))
+					d3.select('#state-value').text(samples[ui.value].time);
+					stateTime = samples[ui.value].time;
 				}
 			});
+
+			d3.select('#state-min').text(samples[0].time);
+			d3.select('#state-max').text(samples[samples.length-1].time);
+
+			stateTime = samples[0].time;
+			statePlay = false;
 		})		
+	});
+
+	$('#transport-play').click(function() {
+		// replay game states...
+		statePlay = true;
+		$(this).addClass('active');
+		
+		timer.tick();
+
+		playHeadIntervalHandle = window.setInterval(function() {
+			timer.tick()
+			stateTime += timer.dt;
+			$('#state-slider div').slider('value', stateTime);
+		}, 0);
+	});
+
+	$('#transport-pause').click(function() {
+		statePlay = false;
+		$('#transport-play').removeClass('active');
+		window.cancleInterval(playHeadIntervalHandle);
 	})
 }
 
