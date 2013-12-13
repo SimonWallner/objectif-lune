@@ -186,3 +186,8 @@ void Server::onMessage(std::string message)
 		warn("unknown message: " + payload.str());
 	}
 }
+
+void Server::registerStateChangeCallback(Server::StateCallback* callback)
+{
+	stateCallback = callback;
+}
