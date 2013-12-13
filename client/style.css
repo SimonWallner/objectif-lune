@@ -380,6 +380,26 @@ div.dataButtons {
   color: #d1d1d1;
   padding: 1em; }
 
+.ui-slider {
+  height: 0.1em;
+  margin-top: 0.5em;
+  margin-bottom: 1em; }
+  .ui-slider .ui-slider-handle {
+    width: 0.6em;
+    height: 1em;
+    color: #e8e8e8;
+    font-size: 2em;
+    background: none;
+    text-align: center;
+    border: none;
+    text-decoration: none; }
+    .ui-slider .ui-slider-handle:before {
+      content: '\2666'; }
+
+.ui-slider-horizontal .ui-slider-handle {
+  top: -0.65em;
+  margin-left: -0.3em; }
+
 /* =========================== SVG styles ============================== */
 path {
   fill: none;

@@ -455,6 +455,36 @@ div.dataButtons {
 	color: $white3;
 	padding: 1em;
 }
+
+.ui-slider {
+	height: 0.1em;
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+
+	.ui-slider-handle {
+		width: 0.6em;
+		height: 1em;
+		color: $white1;
+		font-size: 2em;
+		background: none;
+		text-align: center;
+		border: none;
+		text-decoration: none;
+
+		&:before {
+			content: '\2666';
+		}
+	}
+}
+
+.ui-slider-horizontal {
+	.ui-slider-handle {
+		top: -0.65em;
+		margin-left: -0.3em; // half the width
+	}
+}
+
+
 /* =========================== SVG styles ============================== */
 
 
