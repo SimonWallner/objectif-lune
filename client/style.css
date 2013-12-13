@@ -350,12 +350,14 @@ div.dataButtons {
   #state span.min, #state span.max {
     width: 20%;
     float: left;
-    padding-top: 1em; }
+    padding-top: 1em;
+    font-family: "PT Mono"; }
   #state span.value {
     width: 60%;
     float: left;
     text-align: center;
-    font-size: 2em; }
+    font-size: 2em;
+    font-family: "PT Mono"; }
   #state span.max {
     text-align: right; }
   #state #state-controls {

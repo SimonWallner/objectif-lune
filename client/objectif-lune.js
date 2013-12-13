@@ -786,6 +786,16 @@ function init() {
 		});
 	});
 
+	var stateSliderChanged = function(value) {
+		var response = {
+				type: "state",
+				payload: samples[value]
+			};
+			
+		ws.send(JSON.stringify(response))
+		d3.select('#state-value').text(samples[value].time.toFixed(3));
+	}
+
 	$('#state-resources').change(function() {
 		var value = $(this).val();
 
@@ -801,14 +811,9 @@ function init() {
 				max: samples.length-1,
 				value: 0,
 				slide: function(event, ui) {
-					var response = {
-							type: "state",
-							payload: samples[ui.value]
-						};
-						
-					ws.send(JSON.stringify(response))
-					d3.select('#state-value').text(samples[ui.value].time);
 					stateTime = samples[ui.value].time;
+					stateSliderChanged(ui.value);
+					window.clearInterval(playHeadIntervalHandle);
 				}
 			});
 
@@ -816,7 +821,6 @@ function init() {
 			d3.select('#state-max').text(samples[samples.length-1].time);
 
 			stateTime = samples[0].time;
-			statePlay = false;
 		})		
 	});
 
@@ -830,14 +834,20 @@ function init() {
 		playHeadIntervalHandle = window.setInterval(function() {
 			timer.tick()
 			stateTime += timer.dt;
-			$('#state-slider div').slider('value', stateTime);
+			var sampleIndex = monotonicFindIndex(samples, stateTime, function(d) {return d.time;});
+			$('#state-slider div').slider('value', sampleIndex);
+			stateSliderChanged(sampleIndex);
+
+			if (sampleIndex === samples.length-1) {
+				window.clearInterval(playHeadIntervalHandle);
+			}
 		}, 0);
 	});
 
 	$('#transport-pause').click(function() {
 		statePlay = false;
 		$('#transport-play').removeClass('active');
-		window.cancleInterval(playHeadIntervalHandle);
+		window.clearInterval(playHeadIntervalHandle);
 	})
 }
 
