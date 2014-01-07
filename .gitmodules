@@ -4,3 +4,9 @@
 [submodule "client/d3"]
 	path = client/d3
 	url = git://github.com/mbostock/d3.git
+[submodule "c#_server/ObjectifLune/References"]
+	path = "c#_server/ObjectifLune/References"
+	url = https://github.com/kerryjiang/SuperWebSocket.git
+[submodule "c#_server/ObjectifLune/References/SuperWebSocket"]
+	path = "c#_server/ObjectifLune/References/SuperWebSocket"
+	url = https://github.com/kerryjiang/SuperWebSocket.git

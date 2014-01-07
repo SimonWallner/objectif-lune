@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectifLune", "ObjectifLune\ObjectifLune.csproj", "{24CC9E89-C0E0-412F-B902-7787240192D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperWebSocket.NET35", "References\SuperWebSocket\SuperWebSocket\SuperWebSocket.NET35.csproj", "{2DC79E40-BB70-4F6A-B378-905F2FBC6E97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24CC9E89-C0E0-412F-B902-7787240192D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24CC9E89-C0E0-412F-B902-7787240192D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24CC9E89-C0E0-412F-B902-7787240192D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24CC9E89-C0E0-412F-B902-7787240192D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DC79E40-BB70-4F6A-B378-905F2FBC6E97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DC79E40-BB70-4F6A-B378-905F2FBC6E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DC79E40-BB70-4F6A-B378-905F2FBC6E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DC79E40-BB70-4F6A-B378-905F2FBC6E97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = ObjectifLune\ObjectifLune.csproj
+	EndGlobalSection
+EndGlobal
