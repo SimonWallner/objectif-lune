@@ -1,0 +1,42 @@
+#! /usr/bin/env node
+
+var connected = false;
+var connecting = false;
+var socket = null;
+
+var net = require('net');
+var host = '127.0.0.1';
+var port = 60601
+
+
+var connect = function() {
+	if (connected || connecting) {
+		return;
+	}
+
+	connecting = true;
+
+	var client = new net.Socket();
+	client.connect(port, host, function() {
+		connected = true;
+		client.write('I am Chuck Norris!');
+	});
+
+	client.on('data', function(data) {
+		console.lgo('data: ' + data);
+	});
+
+	client.on('close', function() {
+	    console.log('Connection closed');
+	});
+
+	client.on('error', function(err) {
+		console.log('error occured: ' + err);
+		connected = false;
+		connecting = false;
+	});
+	
+}
+
+setInterval(connect, 1000);
+
