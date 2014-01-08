@@ -10,3 +10,6 @@
 [submodule "c#_server/ObjectifLune/References/SuperWebSocket"]
 	path = "c#_server/ObjectifLune/References/SuperWebSocket"
 	url = https://github.com/kerryjiang/SuperWebSocket.git
+[submodule "c#_server/ObjectifLune/References/SuperSocket"]
+	path = "c#_server/ObjectifLune/References/SuperSocket"
+	url = https://github.com/kerryjiang/SuperSocket.git
