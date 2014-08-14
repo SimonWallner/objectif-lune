@@ -457,6 +457,9 @@ function connect() {
 					}
 				});
 			}
+		} else if (data.type === "image") {
+			d3.select('#image').append('img')
+				.attr('src', 'data:' + data.payload.type + ',' + data.payload.data);
 		}
 	};
 }

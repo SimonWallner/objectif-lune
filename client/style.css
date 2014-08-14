@@ -6,6 +6,10 @@
   font-weight: 400;
   src: local("Entypo"), url(Entypo/entypo.woff) format("woff"); }
 
+img {
+  width: 100%;
+}
+
 .clear {
   clear: both;
   display: block;
